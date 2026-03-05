@@ -1,14 +1,27 @@
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import LowerPyneDashboard from '../components/LowerPyneDashboard'
+import LowerPyneDashboard, { type Tab } from '../components/LowerPyneDashboard'
 
 export default function Dashboard() {
   const navigate = useNavigate()
+  const [userEmail, setUserEmail] = useState<string | null>(null)
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data }) => {
+      setUserEmail(data.user?.email ?? null)
+    })
+  }, [])
 
   async function handleSignOut() {
     await supabase.auth.signOut()
     navigate('/login')
   }
+
+  // Restrict certain accounts to specific tabs
+  const allowedTabs: Tab[] | undefined = userEmail === 'david.l.dobkin@gmail.com'
+    ? ['projections']
+    : undefined
 
   return (
     <div className="min-h-screen bg-white">
@@ -21,7 +34,7 @@ export default function Dashboard() {
           Sign Out
         </button>
       </header>
-      <LowerPyneDashboard />
+      <LowerPyneDashboard allowedTabs={allowedTabs} />
     </div>
   )
 }

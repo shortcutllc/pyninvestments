@@ -251,9 +251,13 @@ const COMBINED_HOUSING_EQUITY = GOVERNORS_LANE_VALUE + NYC_APT_VALUE - GOVERNORS
 // COMPONENT
 // ══════════════════════════════════════════════
 
-export default function LowerPyneDashboard() {
+export type Tab = 'analysis' | 'projections' | 'pyn' | 'housing' | 'expenses';
+const ALL_TABS: Tab[] = ['analysis', 'projections', 'pyn', 'housing', 'expenses'];
+
+export default function LowerPyneDashboard({ allowedTabs }: { allowedTabs?: Tab[] } = {}) {
+  const tabs = allowedTabs ?? ALL_TABS;
   const [activeSection, setActiveSection] = useState('');
-  const [activeTab, setActiveTab] = useState<'analysis' | 'projections' | 'pyn' | 'housing' | 'expenses'>('analysis');
+  const [activeTab, setActiveTab] = useState<Tab>(tabs[0]);
   const [showExpenseDetail, setShowExpenseDetail] = useState(false);
 
   // TOC tracking
@@ -376,7 +380,7 @@ export default function LowerPyneDashboard() {
           </div>
           <div className="flex items-center gap-4">
             <div className="flex bg-[#334A46]/[.06] rounded-lg p-0.5">
-              {(['analysis', 'projections', 'pyn', 'housing', 'expenses'] as const).map((tab) => (
+              {tabs.map((tab) => (
                 <button
                   key={tab}
                   onClick={() => { setActiveTab(tab); window.scrollTo(0, 0); }}
