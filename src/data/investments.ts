@@ -5,6 +5,7 @@ export interface Investment {
   address?: string
   description: string[]
   link?: { label: string; url: string }
+  hidden?: boolean // set to true to hide from public pages; remove to restore
 }
 
 export const investments: Investment[] = [
@@ -55,6 +56,7 @@ export const investments: Investment[] = [
   {
     name: 'Vivvi',
     slug: 'vivvi',
+    hidden: true,
     image: '/images/vivvi.webp',
     description: [
       "Vivvi provides exceptional child care and early education. With programs across the country, including on-campus, in-home, in-office, care cash and virtual tutoring. Vivvi partners with employers of all sizes to make child care more accessible and affordable. By helping companies cater to working parents and providing a comprehensive vision for today's families, Vivvi offers the most powerful tool for recruiting, retention and productivity.",
@@ -64,6 +66,7 @@ export const investments: Investment[] = [
   {
     name: 'Shortcut',
     slug: 'shortcut',
+    hidden: true,
     image: '/images/Shortcut.webp',
     description: [
       "Shortcut is a mobile barbershop platform that brings professional grooming services directly to customers. By reimagining the traditional barbershop experience, Shortcut offers convenient, on-demand haircuts and grooming services at homes, offices, and events across major metropolitan areas.",

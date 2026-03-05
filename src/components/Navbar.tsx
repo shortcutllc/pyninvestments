@@ -4,7 +4,7 @@ import { useState } from 'react'
 const navLinks = [
   { to: '/', label: 'Work' },
   { to: '/about', label: 'About' },
-  { to: '/team', label: 'Our Team' },
+  // { to: '/team', label: 'Our Team' }, // uncomment to restore
   { to: '/press', label: 'Press' },
   { to: '/contact', label: 'Contact' },
 ]
@@ -37,6 +37,12 @@ export default function Navbar() {
               {link.label}
             </NavLink>
           ))}
+          <Link
+            to="/login"
+            className="text-sm tracking-wide no-underline text-gray-400 hover:text-pyn-charcoal transition-colors pb-1"
+          >
+            Sign In
+          </Link>
         </div>
 
         {/* Mobile hamburger */}
@@ -68,6 +74,13 @@ export default function Navbar() {
               {link.label}
             </NavLink>
           ))}
+          <Link
+            to="/login"
+            onClick={() => setMenuOpen(false)}
+            className="block py-3 text-sm tracking-wide no-underline text-gray-400"
+          >
+            Sign In
+          </Link>
         </div>
       )}
     </nav>

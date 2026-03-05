@@ -3,8 +3,7 @@ import { investments } from '../data/investments'
 
 export default function InvestmentDetail() {
   const { slug } = useParams<{ slug: string }>()
-  const index = investments.findIndex((inv) => inv.slug === slug)
-  const investment = investments[index]
+  const investment = investments.find((inv) => inv.slug === slug)
 
   if (!investment) {
     return (
@@ -15,8 +14,10 @@ export default function InvestmentDetail() {
     )
   }
 
-  const prev = index > 0 ? investments[index - 1] : null
-  const next = index < investments.length - 1 ? investments[index + 1] : null
+  const visible = investments.filter((inv) => !inv.hidden)
+  const visibleIndex = visible.findIndex((inv) => inv.slug === slug)
+  const prev = visibleIndex > 0 ? visible[visibleIndex - 1] : null
+  const next = visibleIndex < visible.length - 1 ? visible[visibleIndex + 1] : null
 
   return (
     <>

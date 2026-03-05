@@ -6,11 +6,13 @@ const team = [
   },
   {
     name: 'Ben Newton',
+    hidden: true, // remove to restore
     image: '/images/Ben+Headshot.webp',
     bio: 'Ben Newton brings fresh perspective and energy to Pyn Investments, working alongside his father to manage the firm\'s portfolio of properties and early-stage company investments. Ben focuses on identifying new opportunities and managing day-to-day operations across the portfolio.',
   },
   {
     name: 'Will Newton',
+    hidden: true, // remove to restore
     image: '/images/Will+Headshot+High+Res.webp',
     bio: 'Will Newton contributes to Pyn Investments with a focus on technology and data-driven analysis, helping the firm leverage modern tools for portfolio management and investment evaluation.',
   },
@@ -22,7 +24,7 @@ export default function OurTeam() {
       <div className="max-w-7xl mx-auto">
         <h1 className="font-serif text-5xl md:text-6xl text-pyn-charcoal mb-16">Our Team</h1>
         <div className="grid md:grid-cols-2 gap-x-12 gap-y-20">
-          {team.map((member) => (
+          {team.filter((m) => !m.hidden).map((member) => (
             <div key={member.name}>
               <img
                 src={member.image}

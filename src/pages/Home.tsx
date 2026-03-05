@@ -47,7 +47,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <h2 className="font-serif text-4xl md:text-5xl text-pyn-charcoal mb-16">Current Investments</h2>
           <div className="grid md:grid-cols-2 gap-x-8 gap-y-16">
-            {investments.map((inv) => (
+            {investments.filter((inv) => !inv.hidden).map((inv) => (
               <Link key={inv.slug} to={`/investments/${inv.slug}`} className="group no-underline">
                 <img
                   src={inv.image}

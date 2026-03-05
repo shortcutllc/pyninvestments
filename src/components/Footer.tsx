@@ -46,9 +46,14 @@ export default function Footer() {
             </p>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-gray-100 flex items-center gap-4 text-xs text-gray-400">
-          <img src="/images/pyn logo.png" alt="Lower Pyne Building" className="h-10 opacity-60" />
-          <span>&copy; 1983</span>
+        <div className="max-w-7xl mx-auto mt-12 pt-8 border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
+          <div className="flex items-center gap-4">
+            <img src="/images/pyn logo.png" alt="Lower Pyne Building" className="h-10 opacity-60" />
+            <span>&copy; 1983</span>
+          </div>
+          <Link to="/login" className="no-underline text-gray-400 hover:text-pyn-charcoal transition-colors">
+            Employee Login
+          </Link>
         </div>
       </div>
     </footer>
