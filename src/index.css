@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --color-pyn-teal: #2A4A46;
+  --color-pyn-teal-light: #334A46;
+  --color-pyn-peach: #E8A87C;
+  --color-pyn-peach-dark: #D4956A;
+  --color-pyn-cream: #FAF8F5;
+  --color-pyn-charcoal: #1A1A1A;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-pyn-charcoal);
+  background-color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
