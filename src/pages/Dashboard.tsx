@@ -5,11 +5,11 @@ import LowerPyneDashboard, { type Tab } from '../components/LowerPyneDashboard'
 
 export default function Dashboard() {
   const navigate = useNavigate()
-  const [userEmail, setUserEmail] = useState<string | null>(null)
+  const [userEmail, setUserEmail] = useState<string | undefined>(undefined)
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
-      setUserEmail(data.user?.email ?? null)
+      setUserEmail(data.user?.email ?? '')
     })
   }, [])
 
@@ -34,7 +34,13 @@ export default function Dashboard() {
           Sign Out
         </button>
       </header>
-      <LowerPyneDashboard allowedTabs={allowedTabs} />
+      {userEmail === undefined ? (
+        <div className="flex items-center justify-center py-20">
+          <p className="text-gray-400">Loading...</p>
+        </div>
+      ) : (
+        <LowerPyneDashboard allowedTabs={allowedTabs} />
+      )}
     </div>
   )
 }
