@@ -67,7 +67,7 @@ function Table({ headers, rows, className = '', compact = false }: { headers: st
 function Stat({ value, label, accent = false }: { value: string; label: string; accent?: boolean }) {
   return (
     <div className={`rounded-2xl p-5 overflow-hidden ${accent ? 'bg-[#334A46] text-white' : 'bg-[#FAFAFA] border border-[#334A46]/[.08]'}`}>
-      <div className={`text-[1.4rem] md:text-[1.75rem] font-extrabold leading-none whitespace-nowrap ${accent ? 'text-[#FFFFFF]' : 'text-[#334A46]'}`}>{value}</div>
+      <div className={`text-[1.1rem] md:text-[1.4rem] lg:text-[1.75rem] font-extrabold leading-tight ${accent ? 'text-[#FFFFFF]' : 'text-[#334A46]'}`}>{value}</div>
       <div className={`mt-2 text-[12px] font-semibold uppercase tracking-[.08em] ${accent ? 'text-white/70' : 'text-[#334A46]'}`}>{label}</div>
     </div>
   );
@@ -2422,7 +2422,7 @@ function ProjectionsView() {
               <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: dscrColor }} />
               <span className="text-[11px] font-bold uppercase tracking-[.08em]" style={{ color: dscrColor }}>{dscrLabel}</span>
             </div>
-            <div className="text-[1.4rem] md:text-[1.75rem] font-extrabold leading-none text-[#334A46]">{minDSCR.toFixed(2)}x</div>
+            <div className="text-[1.1rem] md:text-[1.4rem] lg:text-[1.75rem] font-extrabold leading-tight text-[#334A46]">{minDSCR.toFixed(2)}x</div>
             <div className="mt-2 text-[12px] font-semibold uppercase tracking-[.08em] text-[#334A46]">Min DSCR</div>
           </div>
         </div>
