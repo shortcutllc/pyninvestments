@@ -15,7 +15,8 @@ export default function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between h-20">
-        <Link to="/" className="no-underline">
+        <Link to="/" className="no-underline flex items-center gap-2">
+          <img src="/images/pyn logo.png" alt="Lower Pyne Building" className="h-7" />
           <img src="/images/pyn letter green-11.png" alt="Pyn Investments" className="h-8" />
         </Link>
 

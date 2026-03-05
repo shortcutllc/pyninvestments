@@ -11,7 +11,7 @@ export default function Home() {
           alt="Lower Pyne Building, Nassau Street, Princeton"
           className="w-full h-[60vh] md:h-[70vh] object-cover"
         />
-        <div className="absolute inset-0 bg-black/20 flex items-end">
+        <div className="absolute inset-0 bg-pyn-teal/70 flex items-end">
           <div className="max-w-7xl mx-auto w-full px-6 lg:px-12 pb-12 md:pb-16">
             <p className="font-serif text-xl md:text-2xl lg:text-3xl text-white max-w-2xl leading-relaxed">
               Pyn Investments is a family run investment firm focused on real estate and early staged companies.
