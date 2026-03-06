@@ -4430,18 +4430,34 @@ function ContractorsView() {
       <Section>
         <SectionLabel>Expense &rarr; Vendor Mapping (2021&ndash;2025)</SectionLabel>
         <p className="text-[13px] text-[#3D4F5F] mb-5">Connecting the P&amp;L expense categories to their primary vendor. 2021&ndash;2023 sourced from contractor A/P; 2024&ndash;2025 from P&amp;L.</p>
-        <Table
-          headers={['Expense Category', '2021', '2022', '2023', '2024', '2025', 'Primary Vendor']}
-          rows={expenseVendorMap.map((row) => [
-            row.category,
-            row.amount2021 ? fmt(row.amount2021) : '—',
-            row.amount2022 ? fmt(row.amount2022) : '—',
-            fmt(row.amount2023),
-            fmt(row.amount2024),
-            fmt(row.amount2025),
-            row.vendor,
-          ])}
-        />
+        {(() => {
+          const t21 = expenseVendorMap.reduce((s, r) => s + r.amount2021, 0);
+          const t22 = expenseVendorMap.reduce((s, r) => s + r.amount2022, 0);
+          const t23 = expenseVendorMap.reduce((s, r) => s + r.amount2023, 0);
+          const t24 = expenseVendorMap.reduce((s, r) => s + r.amount2024, 0);
+          const t25 = expenseVendorMap.reduce((s, r) => s + r.amount2025, 0);
+          const bold = (v: string) => <span className="font-extrabold text-[#334A46]">{v}</span>;
+          return (
+            <Table
+              headers={['Expense Category', '2021', '2022', '2023', '2024', '2025', 'Primary Vendor']}
+              rows={[
+                ...expenseVendorMap.map((row) => [
+                  row.category,
+                  row.amount2021 ? fmt(row.amount2021) : '—',
+                  row.amount2022 ? fmt(row.amount2022) : '—',
+                  fmt(row.amount2023),
+                  fmt(row.amount2024),
+                  fmt(row.amount2025),
+                  row.vendor,
+                ]),
+                [bold('Total'), bold(fmt(t21)), bold(fmt(t22)), bold(fmt(t23)), bold(fmt(t24)), bold(fmt(t25)), ''],
+              ]}
+            />
+          );
+        })()}
+        <div className="mt-4 bg-[#FFF8E1] rounded-xl px-4 py-3 text-[13px] text-[#3D4F5F] leading-relaxed">
+          <span className="font-bold text-[#334A46]">Note on 2023 figures:</span> The 2023 column is sourced from contractor A/P payment records, which differ from accrual-basis P&amp;L by ~$9K. Key variances: Janitorial (+$4.6K), Snow Removal (&minus;$4.7K), Repairs A/C (&minus;$4.7K), and Grounds (&minus;$4.6K). The 2024&ndash;2025 columns use P&amp;L figures and align exactly with the Analysis tab. 2021&ndash;2022 exclude Electric, Water &amp; Sewer, and Property Management (data not available).
+        </div>
       </Section>
 
       {/* ── Bankers ── */}
