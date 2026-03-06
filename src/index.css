@@ -1,14 +1,41 @@
 @import "tailwindcss";
 
 @theme {
+  /* ── Typography ── */
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
+
+  /* ── Brand Colors ── */
   --color-pyn-teal: #2A4A46;
   --color-pyn-teal-light: #334A46;
   --color-pyn-peach: #E8A87C;
   --color-pyn-peach-dark: #D4956A;
   --color-pyn-cream: #FAF8F5;
   --color-pyn-charcoal: #1A1A1A;
+
+  /* ── Dashboard Text ── */
+  --color-pyn-body: #3D4F5F;
+  --color-pyn-muted: #666666;
+  --color-pyn-card: #FAFAFA;
+
+  /* ── Status Colors ── */
+  --color-pyn-success: #2E7D32;
+  --color-pyn-danger: #C62828;
+  --color-pyn-warning: #B26A00;
+  --color-pyn-caution: #F57F17;
+  --color-pyn-accent-red: #FF5050;
+  --color-pyn-info: #1565C0;
+
+  /* ── Highlight Backgrounds ── */
+  --color-pyn-success-bg: #E2EFDA;
+  --color-pyn-success-bg-alt: #E8F5E9;
+  --color-pyn-warning-bg: #FFF8E1;
+  --color-pyn-danger-bg: #FFEBEE;
+
+  /* ── Chart / Visualization ── */
+  --color-pyn-chart-green: #6B9E8A;
+  --color-pyn-chart-gray: #9CA3AF;
+  --color-pyn-chart-blue: #2E5A88;
 }
 
 html {

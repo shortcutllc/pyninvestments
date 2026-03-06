@@ -251,8 +251,8 @@ const COMBINED_HOUSING_EQUITY = GOVERNORS_LANE_VALUE + NYC_APT_VALUE - GOVERNORS
 // COMPONENT
 // ══════════════════════════════════════════════
 
-export type Tab = 'analysis' | 'projections' | 'pyn' | 'housing' | 'expenses';
-const ALL_TABS: Tab[] = ['analysis', 'projections', 'pyn', 'housing', 'expenses'];
+export type Tab = 'analysis' | 'projections' | 'pyn' | 'housing' | 'expenses' | 'contractors';
+const ALL_TABS: Tab[] = ['analysis', 'projections', 'pyn', 'housing', 'expenses', 'contractors'];
 
 export default function LowerPyneDashboard({ allowedTabs }: { allowedTabs?: Tab[] } = {}) {
   const tabs = allowedTabs ?? ALL_TABS;
@@ -390,7 +390,7 @@ export default function LowerPyneDashboard({ allowedTabs }: { allowedTabs?: Tab[
                       : 'text-[#334A46] hover:text-[#334A46]'
                   }`}
                 >
-                  {tab === 'analysis' ? 'Analysis' : tab === 'projections' ? 'Projections' : tab === 'pyn' ? 'Pyn' : tab === 'housing' ? 'Housing' : 'Personal'}
+                  {tab === 'analysis' ? 'Analysis' : tab === 'projections' ? 'Projections' : tab === 'pyn' ? 'Pyn' : tab === 'housing' ? 'Housing' : tab === 'expenses' ? 'Personal' : 'Contractors'}
                 </button>
               ))}
             </div>
@@ -1985,8 +1985,10 @@ export default function LowerPyneDashboard({ allowedTabs }: { allowedTabs?: Tab[
         <PynView />
       ) : activeTab === 'housing' ? (
         <HousingView />
-      ) : (
+      ) : activeTab === 'expenses' ? (
         <PersonalExpensesView />
+      ) : (
+        <ContractorsView />
       )}
     </div>
   );
@@ -4057,6 +4059,433 @@ function PersonalExpensesView() {
       <div className="pt-10 pb-6 border-t border-[#334A46]/[.08] text-center">
         <div className="text-[11px] text-[#334A46] font-medium">
           Pyn Investments LLC &middot; Confidential &middot; Personal Expense Report &middot; 2025
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════
+// CONTRACTORS TAB
+// ══════════════════════════════════════════════
+
+interface Contractor {
+  name: string;
+  company?: string;
+  role: string;
+  phone?: string;
+  email?: string;
+  contacts?: { name: string; title?: string; phone?: string; email?: string }[];
+  payments: { [year: number]: number };
+  expenseCategory?: string; // maps to expense line items in Analysis tab
+  notes?: string;
+}
+
+const contractors: Contractor[] = [
+  {
+    name: 'Victor Farfan',
+    company: 'Inarvy Lebasi Services',
+    role: 'Builder / General Contractor',
+    phone: '609-933-2086',
+    email: 'victor93_8@msn.com',
+    payments: { 2021: 86897, 2022: 55275, 2023: 7925 },
+    expenseCategory: 'Repairs & Maintenance General',
+  },
+  {
+    name: 'Princeton Air',
+    role: 'HVAC',
+    phone: '609-799-3434',
+    contacts: [
+      { name: 'Scott Needham', title: 'President', email: 'scott.needham@princetonair.com' },
+      { name: 'Emily Toledo', title: 'Appointments', email: 'Emily.toledo@princetonair.com' },
+    ],
+    payments: { 2021: 4862, 2022: 16804, 2023: 10016, 2024: 24636, 2025: 6115 },
+    expenseCategory: 'Repairs & Maintenance A/C',
+  },
+  {
+    name: 'FYRFYTER',
+    role: 'Sprinkler / Extinguishers',
+    phone: '609-896-0600',
+    contacts: [
+      { name: 'Jason Chiarello', title: 'President', phone: '609-558-4916', email: 'jason@fyrfyter.net' },
+      { name: 'Amanda Bossman', title: 'Admin', email: 'amanda@fyrfyter.net' },
+    ],
+    payments: { 2021: 2569, 2022: 6234, 2023: 8272 },
+    expenseCategory: 'Repairs & Maintenance General',
+  },
+  {
+    name: 'CSS Fire Monitoring',
+    role: 'Fire Alarms',
+    phone: '732-434-4000',
+    contacts: [
+      { name: 'Anthony Rutter', title: 'Salesperson', phone: '908-415-9444', email: 'anthony.rutter@completesecuritysystems.com' },
+    ],
+    payments: { 2021: 1503, 2022: 1189, 2023: 2430 },
+    expenseCategory: 'Repairs & Maintenance General',
+    notes: 'Acct: 92 Nassau Street / Acct#: 904 5801',
+  },
+  {
+    name: 'TK Elevator (ThyssenKrupp)',
+    role: 'Elevator Repair & Maintenance',
+    phone: '610-992-8180',
+    contacts: [
+      { name: 'Chuck Kelly', title: 'Engineer', phone: '609-839-1785', email: 'kevin.kelly@tkelevator.com' },
+    ],
+    payments: { 2021: 13176, 2022: 6411, 2023: 14030 },
+    expenseCategory: 'Repairs & Maintenance General',
+    notes: 'Always put in service call first.',
+  },
+  {
+    name: 'Jefferson Plumbing & Heating',
+    role: 'Plumbing (Repairs & Leaks)',
+    phone: '609-924-3624',
+    contacts: [
+      { name: 'Bruce Jefferson', phone: '609-915-6026' },
+    ],
+    payments: { 2021: 223, 2022: 0, 2023: 394 },
+    expenseCategory: 'Repairs & Maintenance General',
+  },
+  {
+    name: 'Princeton Cleaning Group',
+    role: 'Janitorial — 92 Nassau Offices',
+    phone: '609-947-7664',
+    contacts: [
+      { name: 'Jose Debernard', email: 'josedb11@yahoo.com' },
+    ],
+    payments: { 2021: 18198, 2022: 21283, 2023: 24972, 2024: 21816, 2025: 23864 },
+    expenseCategory: 'Janitorial',
+  },
+  {
+    name: 'Western Pest Services',
+    role: 'Monthly Pest Service',
+    phone: '609-688-1492',
+    payments: { 2021: 1802, 2022: 1970, 2023: 2093, 2024: 2235, 2025: 2459 },
+    expenseCategory: 'Pest Control',
+  },
+  {
+    name: 'Mastroianni Landscaping',
+    role: 'Snow / Ice Removal',
+    phone: '609-306-2926',
+    contacts: [
+      { name: 'John Mastroianni', email: 'ilovemylandscap@aol.com' },
+    ],
+    payments: { 2021: 4233, 2022: 5175, 2023: 1072, 2024: 6499, 2025: 15881 },
+    expenseCategory: 'Snow Removal',
+  },
+  {
+    name: 'Republic Services',
+    role: 'Trash Removal',
+    phone: '732-545-8988',
+    payments: { 2021: 3512, 2022: 3991, 2023: 4359, 2024: 4200, 2025: 4767 },
+    expenseCategory: 'Trash Collection',
+  },
+  {
+    name: 'CBIZ Borden Perlman',
+    role: 'Insurance Broker',
+    contacts: [
+      { name: 'Jeff Perlman', title: 'Broker', phone: '609-896-3434 x109', email: 'jeffperlman@cbizbp.com' },
+      { name: 'Missy Mercer', title: 'Business Insurance', phone: '609-362-6299', email: 'missy.mercer@cbizbp.com' },
+      { name: 'Colette Meheski', title: 'Homeowners Insurance', phone: '609-512-2936', email: 'colette.meheski@cbizbp.com' },
+    ],
+    payments: { 2021: 19511, 2022: 20508, 2023: 22220, 2024: 23603, 2025: 25699 },
+    expenseCategory: 'Insurance',
+    notes: 'Carrier: Franklin Mutual Insurance Co',
+  },
+  {
+    name: 'Janet Makrancy Weddings',
+    role: 'Christmas Decorations',
+    phone: '609-443-8032',
+    contacts: [
+      { name: 'Cameron Ferrara', phone: '609-577-5068', email: 'cameron@janetmakrancy.com' },
+    ],
+    email: 'info@janetmakrancy.com',
+    payments: { 2021: 14599, 2022: 9000, 2023: 9404, 2024: 14419, 2025: 20358 },
+    expenseCategory: 'Grounds',
+  },
+  {
+    name: 'ICI Finishes & Flooring',
+    role: 'Carpets / Flooring / Space Design',
+    phone: '609-538-8800',
+    contacts: [
+      { name: 'Don Goodrich', title: 'Flooring', phone: '609-538-8800 x201', email: 'don@iciflooring.com' },
+      { name: 'Brett Margulis', title: 'Space Layout & Design', phone: '609-538-8800 x221', email: 'brett@icifurniture.com' },
+    ],
+    payments: { 2021: 0, 2022: 0, 2023: 10959, 2024: 0, 2025: 720 },
+    expenseCategory: 'Landlord Work',
+  },
+  {
+    name: 'Troutman Pepper (Leasing)',
+    role: 'Attorney — Leasing',
+    contacts: [
+      { name: 'Cindy Delisi', phone: '609-951-4104', email: 'cynthia.delisi@troutman.com' },
+    ],
+    payments: { 2021: 2179, 2022: 4412, 2023: 0, 2024: 0, 2025: 117 },
+    expenseCategory: 'Professional Fees — Legal',
+  },
+  {
+    name: 'Troutman Pepper (Zoning)',
+    role: 'Attorney — Zoning',
+    contacts: [
+      { name: 'Tom Letizia', phone: '609-951-4136', email: 'thomas.letizia@troutman.com' },
+    ],
+    payments: { 2021: 0, 2022: 0, 2023: 0 },
+    expenseCategory: 'Professional Fees — Legal',
+  },
+  {
+    name: 'Troutman Pepper (Financing)',
+    role: 'Attorney — Financing',
+    contacts: [
+      { name: 'Delia Donahue', phone: '609-951-4149', email: 'Delia.donahue@troutman.com' },
+    ],
+    payments: { 2021: 0, 2022: 0, 2023: 0 },
+    expenseCategory: 'Professional Fees — Legal',
+  },
+  {
+    name: 'Axiom CPA',
+    role: 'Audit & Tax Accounting (Lower Pyne)',
+    contacts: [
+      { name: 'Doug Smith', phone: '609-955-3427', email: 'dsmith@AxiomCPAs.com' },
+    ],
+    payments: { 2021: 4980, 2022: 4980, 2023: 4980, 2024: 4980, 2025: 4980 },
+    expenseCategory: 'Professional Fees — Accounting',
+  },
+];
+
+const employees = [
+  { name: 'Scott Colantoni', role: 'Controller', phone: '609-433-0490', email: 'hckyrls3@yahoo.com' },
+  { name: 'Carlos Cortez', role: 'Maintenance', phone: '609-558-5583', email: 'ccortez631@gmail.com' },
+];
+
+const bankers = [
+  { name: 'Jeremy Katz', company: 'WSFS Bank', role: 'Lower Pyne Mortgage', phone: '484-804-7039', email: 'jkatz@wssbank.com' },
+  { name: 'Rob Dudek', company: 'Merrill Lynch / Bank of America', role: 'Pyn, Personal & 401k', phone: '609-477-9071', email: 'robert.dudek@ml.com', contacts: [{ name: 'Cory Wajda', title: 'Assistant', phone: '609-243-6836', email: 'cory.wajda@ml.com' }] },
+  { name: 'Georgie Moss', company: 'Wells Fargo', role: 'IRA & Brokerage', phone: '609-688-0948', email: 'Georgeanne.g.moss1@wellsfargoadvisors.com' },
+  { name: 'Andrew Hauber', company: 'March Advisors', role: 'Financial Advice & Insurance', phone: '215-738-2377', email: 'ahauber@marchfwd.com' },
+];
+
+const accountants = [
+  { name: 'Dan Duffy', company: 'DJ Duffy Inc.', role: 'Pyn & David Newton', phone: '732-528-7110', email: 'djd@djduffyinc.com', contacts: [{ name: 'Susan Gargano', title: 'Assistant', phone: '732-528-7110', email: 'admin@djduffyinc.com' }] },
+  { name: 'Denise Brodel', company: 'Lear & Pannepacker CPA', role: 'David Newton Personal', phone: '609-865-8208', email: 'denise@lp-cpa.com' },
+];
+
+// Map 2024-2025 expenses to vendors where possible
+const expenseVendorMap: { category: string; amount2021: number; amount2022: number; amount2023: number; amount2024: number; amount2025: number; vendor: string }[] = [
+  { category: 'Janitorial', amount2021: 18198, amount2022: 21283, amount2023: 24972, amount2024: 21816, amount2025: 23864, vendor: 'Princeton Cleaning Group' },
+  { category: 'Snow Removal', amount2021: 4233, amount2022: 5175, amount2023: 1072, amount2024: 6499, amount2025: 15881, vendor: 'Mastroianni Landscaping' },
+  { category: 'Pest Control', amount2021: 1802, amount2022: 1970, amount2023: 2093, amount2024: 2235, amount2025: 2459, vendor: 'Western Pest Services' },
+  { category: 'Trash Collection', amount2021: 3512, amount2022: 3991, amount2023: 4359, amount2024: 4200, amount2025: 4767, vendor: 'Republic Services' },
+  { category: 'Insurance', amount2021: 19511, amount2022: 20508, amount2023: 22220, amount2024: 23603, amount2025: 25699, vendor: 'CBIZ Borden Perlman (Franklin Mutual)' },
+  { category: 'Repairs & Maint. A/C', amount2021: 4862, amount2022: 16804, amount2023: 10016, amount2024: 24636, amount2025: 6115, vendor: 'Princeton Air' },
+  { category: 'Prof. Fees — Accounting', amount2021: 4980, amount2022: 4980, amount2023: 4980, amount2024: 4980, amount2025: 4980, vendor: 'Axiom CPA (Doug Smith)' },
+  { category: 'Repairs & Maint. General', amount2021: 104368, amount2022: 69109, amount2023: 33051, amount2024: 54852, amount2025: 37686, vendor: 'Multiple (see below)' },
+  { category: 'Grounds', amount2021: 14599, amount2022: 9000, amount2023: 9404, amount2024: 14419, amount2025: 20358, vendor: 'Mastroianni + Janet Makrancy' },
+  { category: 'Prof. Fees — Legal', amount2021: 2179, amount2022: 4412, amount2023: 0, amount2024: 0, amount2025: 117, vendor: 'Troutman Pepper' },
+  { category: 'Prof. Fees — Architect', amount2021: 0, amount2022: 0, amount2023: 0, amount2024: 0, amount2025: 4050, vendor: 'TBD' },
+  { category: 'Electric', amount2021: 0, amount2022: 0, amount2023: 13485, amount2024: 14718, amount2025: 18345, vendor: 'Utility (need electrician)' },
+  { category: 'Water & Sewer', amount2021: 0, amount2022: 0, amount2023: 5499, amount2024: 5734, amount2025: 6199, vendor: 'Municipal Utility' },
+  { category: 'Property Management', amount2021: 0, amount2022: 0, amount2023: 33015, amount2024: 33971, amount2025: 35083, vendor: 'Property Management' },
+];
+
+function ContactCard({ name, company, role, phone, email, contacts, notes }: {
+  name: string; company?: string; role?: string; phone?: string; email?: string;
+  contacts?: { name: string; title?: string; phone?: string; email?: string }[];
+  notes?: string;
+}) {
+  return (
+    <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-5">
+      <div className="text-[15px] font-bold text-[#334A46]">{name}</div>
+      {company && <div className="text-[12px] font-semibold text-[#3D4F5F] mt-0.5">{company}</div>}
+      {role && <div className="text-[11px] font-semibold text-[#3D4F5F] uppercase tracking-[.06em] mt-0.5">{role}</div>}
+      <div className="mt-3 space-y-1 text-[13px] text-[#3D4F5F]">
+        {phone && <div className="flex items-center gap-2"><span className="text-[#3D4F5F] text-[11px]">TEL</span> {phone}</div>}
+        {email && <div className="flex items-center gap-2"><span className="text-[#3D4F5F] text-[11px]">EMAIL</span> <a href={'mailto:' + email} className="text-[#334A46] underline">{email}</a></div>}
+      </div>
+      {contacts?.map((ct) => (
+        <div key={ct.name} className="mt-3 pl-3 border-l-2 border-[#334A46]/10">
+          <div className="text-[13px] font-semibold text-[#334A46]">{ct.name}{ct.title ? <span className="text-[#3D4F5F] font-normal"> &mdash; {ct.title}</span> : ''}</div>
+          <div className="space-y-0.5 mt-1">
+            {ct.phone && <div className="text-[12px] text-[#3D4F5F] flex items-center gap-2"><span className="text-[#3D4F5F] text-[10px]">TEL</span> {ct.phone}</div>}
+            {ct.email && <div className="text-[12px] text-[#3D4F5F] flex items-center gap-2"><span className="text-[#3D4F5F] text-[10px]">EMAIL</span> <a href={'mailto:' + ct.email} className="text-[#334A46] underline">{ct.email}</a></div>}
+          </div>
+        </div>
+      ))}
+      {notes && <div className="mt-3 text-[12px] text-[#3D4F5F] italic bg-[#FAFAFA] rounded-lg px-3 py-2">{notes}</div>}
+    </div>
+  );
+}
+
+function ContractorsView() {
+  const [expandedVendor, setExpandedVendor] = useState<string | null>(null);
+
+  return (
+    <div className="max-w-7xl mx-auto px-6 py-10">
+      {/* Header */}
+      <div className="mb-12">
+        <div className="text-[11px] font-bold uppercase tracking-[.15em] text-[#334A46] mb-3">Lower Pyne Associates LP</div>
+        <h1 className="text-[2rem] md:text-[2.5rem] font-extrabold text-[#334A46] leading-tight mb-4">Contractors & Vendors</h1>
+        <p className="text-[14px] text-[#3D4F5F] leading-relaxed max-w-2xl">Directory, payment history, and expense mapping (2021&ndash;2025). Contact information for all service providers, financial advisors, and professional consultants.</p>
+      </div>
+
+      <div className="space-y-16">
+
+      {/* ── Employees ── */}
+      <Section>
+        <SectionLabel>Employees</SectionLabel>
+        <div className="grid md:grid-cols-2 gap-4">
+          {employees.map((e) => (
+            <ContactCard key={e.name} name={e.name} role={e.role} phone={e.phone} email={e.email} />
+          ))}
+        </div>
+      </Section>
+
+      {/* ── Contractors / Vendors ── */}
+      <Section>
+        <SectionLabel>Contractors & Vendors</SectionLabel>
+        <p className="text-[13px] text-[#3D4F5F] mb-5">Click any vendor to expand contact details and payment history.</p>
+        <div className="space-y-2">
+          {contractors.map((c) => {
+            const isExpanded = expandedVendor === (c.company || c.name);
+            const latestYear = Math.max(...Object.keys(c.payments).map(Number));
+            const latestPaid = c.payments[latestYear] ?? 0;
+            return (
+              <div key={c.company || c.name} className={`rounded-2xl border overflow-hidden transition-colors ${isExpanded ? 'border-[#334A46]/[.15] bg-white shadow-sm' : 'border-[#334A46]/[.08] hover:border-[#334A46]/[.12]'}`}>
+                <button
+                  onClick={() => setExpandedVendor(isExpanded ? null : (c.company || c.name))}
+                  className="w-full px-5 py-4 flex items-center justify-between bg-transparent border-none cursor-pointer text-left"
+                >
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <span className="text-[15px] font-bold text-[#334A46]">{c.company || c.name}</span>
+                      <span className="text-[10px] font-semibold text-[#3D4F5F] uppercase tracking-[.08em] bg-[#334A46]/[.04] px-2 py-0.5 rounded-md">{c.role}</span>
+                    </div>
+                    {c.expenseCategory && (
+                      <div className="text-[11px] text-[#3D4F5F] mt-1">Maps to: {c.expenseCategory}</div>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-3 shrink-0 ml-4">
+                    <div className="text-right">
+                      <span className="text-[14px] font-bold text-[#334A46]">{fmt(latestPaid)}</span>
+                      <span className="text-[11px] text-[#3D4F5F] ml-2">{latestYear}</span>
+                    </div>
+                    <span className={`text-[14px] text-[#3D4F5F] transition-transform ${isExpanded ? 'rotate-90' : ''}`}>&#9656;</span>
+                  </div>
+                </button>
+
+                {isExpanded && (
+                  <div className="px-5 pb-5 border-t border-[#334A46]/[.06]">
+                    <div className="grid md:grid-cols-2 gap-8 pt-5">
+                      {/* Contact Info */}
+                      <div>
+                        <div className="text-[11px] font-bold uppercase tracking-[.15em] text-[#334A46] mb-3">Contact</div>
+                        <div className="space-y-1.5">
+                          {c.phone && <div className="text-[13px] text-[#3D4F5F] flex items-center gap-2"><span className="text-[#3D4F5F] text-[10px] font-semibold">TEL</span> {c.phone}</div>}
+                          {c.email && <div className="text-[13px] text-[#3D4F5F] flex items-center gap-2"><span className="text-[#3D4F5F] text-[10px] font-semibold">EMAIL</span> <a href={'mailto:' + c.email} className="text-[#334A46] underline">{c.email}</a></div>}
+                        </div>
+                        {c.contacts?.map((ct) => (
+                          <div key={ct.name} className="mt-3 pl-3 border-l-2 border-[#334A46]/10">
+                            <div className="text-[13px] font-semibold text-[#334A46]">{ct.name}{ct.title ? <span className="text-[#3D4F5F] font-normal"> &mdash; {ct.title}</span> : ''}</div>
+                            <div className="space-y-0.5 mt-1">
+                              {ct.phone && <div className="text-[12px] text-[#3D4F5F] flex items-center gap-2"><span className="text-[#3D4F5F] text-[10px]">TEL</span> {ct.phone}</div>}
+                              {ct.email && <div className="text-[12px] text-[#3D4F5F] flex items-center gap-2"><span className="text-[#3D4F5F] text-[10px]">EMAIL</span> <a href={'mailto:' + ct.email} className="text-[#334A46] underline">{ct.email}</a></div>}
+                            </div>
+                          </div>
+                        ))}
+                        {c.notes && <div className="mt-4 text-[12px] text-[#3D4F5F] italic bg-[#FAFAFA] rounded-lg px-3 py-2">{c.notes}</div>}
+                      </div>
+
+                      {/* Payment History */}
+                      <div>
+                        <div className="text-[11px] font-bold uppercase tracking-[.15em] text-[#334A46] mb-3">Payment History</div>
+                        <div className="bg-[#FAFAFA] rounded-xl p-4">
+                          <table className="w-full text-left border-collapse">
+                            <thead>
+                              <tr>
+                                {Object.keys(c.payments).sort().map((yr) => (
+                                  <th key={yr} className="text-[11px] font-bold uppercase tracking-[.06em] text-[#334A46] py-2 px-2 text-right border-b border-[#334A46]/[.08]">{yr}</th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                {Object.keys(c.payments).sort().map((yr) => (
+                                  <td key={yr} className="text-[14px] font-semibold text-[#334A46] py-2.5 px-2 text-right">
+                                    {c.payments[Number(yr)] ? fmt(c.payments[Number(yr)]) : <span className="text-[#3D4F5F]">&mdash;</span>}
+                                  </td>
+                                ))}
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </Section>
+
+      {/* ── Expense → Vendor Mapping (2021-2025) ── */}
+      <Section>
+        <SectionLabel>Expense &rarr; Vendor Mapping (2021&ndash;2025)</SectionLabel>
+        <p className="text-[13px] text-[#3D4F5F] mb-5">Connecting the P&amp;L expense categories to their primary vendor. 2021&ndash;2023 sourced from contractor A/P; 2024&ndash;2025 from P&amp;L.</p>
+        <Table
+          headers={['Expense Category', '2021', '2022', '2023', '2024', '2025', 'Primary Vendor']}
+          rows={expenseVendorMap.map((row) => [
+            row.category,
+            row.amount2021 ? fmt(row.amount2021) : '—',
+            row.amount2022 ? fmt(row.amount2022) : '—',
+            fmt(row.amount2023),
+            fmt(row.amount2024),
+            fmt(row.amount2025),
+            row.vendor,
+          ])}
+        />
+      </Section>
+
+      {/* ── Bankers ── */}
+      <Section>
+        <SectionLabel>Bankers & Financial Advisors</SectionLabel>
+        <div className="grid md:grid-cols-2 gap-4">
+          {bankers.map((b) => (
+            <ContactCard
+              key={b.name}
+              name={b.name}
+              company={b.company}
+              role={b.role}
+              phone={b.phone}
+              email={b.email}
+              contacts={'contacts' in b ? (b as typeof b & { contacts: { name: string; title?: string; phone?: string; email?: string }[] }).contacts : undefined}
+            />
+          ))}
+        </div>
+      </Section>
+
+      {/* ── Accountants ── */}
+      <Section>
+        <SectionLabel>Accountants</SectionLabel>
+        <div className="grid md:grid-cols-2 gap-4">
+          {accountants.map((a) => (
+            <ContactCard
+              key={a.name}
+              name={a.name}
+              company={a.company}
+              role={a.role}
+              phone={a.phone}
+              email={a.email}
+              contacts={'contacts' in a ? (a as typeof a & { contacts: { name: string; title?: string; phone?: string; email?: string }[] }).contacts : undefined}
+            />
+          ))}
+        </div>
+      </Section>
+
+      </div>
+
+      {/* Footer */}
+      <div className="mt-16 pt-8 pb-6 border-t border-[#334A46]/[.08] text-center">
+        <div className="text-[11px] text-[#334A46] font-medium tracking-[.05em]">
+          Lower Pyne Associates LP &middot; Confidential &middot; Contractor Directory
         </div>
       </div>
     </div>
