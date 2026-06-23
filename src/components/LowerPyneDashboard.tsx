@@ -3166,13 +3166,12 @@ function PynView() {
                   <td className="py-2.5 px-4 text-[12px] font-bold uppercase tracking-[.08em] text-[#334A46]" colSpan={3}>Non-Qualified Assets</td>
                 </tr>
                 {[
-                  { name: 'Cash / Alternatives', value: 35545 },
-                  { name: 'CDs', value: 156906 },
-                  { name: 'CIMA \u2014 Merrill Lynch *3707', value: 34338 },
-                  { name: 'Gold Certificate', value: 40000 },
+                  { name: 'CDs', value: 35545 },
+                  { name: 'CMA \u2014 Merrill Lynch *3707', value: 156906 },
+                  { name: 'Gold Certificate', value: 34338 },
                   { name: 'Private Equity \u2014 Shortcut LP', value: 40000 },
                   { name: 'Private Equity \u2014 Terracycle LP', value: 20000 },
-                  { name: 'Private Equity \u2014 Viwa LP', value: 44614 },
+                  { name: 'Private Equity \u2014 Vivva LP', value: 44614 },
                   { name: 'Royal Bank Scotland', value: 17000 },
                   { name: 'MetLife GAUL *8319 (Cash Surrender)', value: 39705 },
                 ].map((a) => (
