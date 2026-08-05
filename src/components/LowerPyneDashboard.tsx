@@ -3437,7 +3437,32 @@ function PynView() {
 // ═══════════════════════════════════════════════════════════
 
 function AgendaView() {
-  const listCard = (rows: [string, string][]) => (
+  const Head = ({ n, label, title, sub }: { n: string; label: string; title: string; sub?: string }) => (
+    <div className="mb-7">
+      <div className="flex items-center gap-3 mb-2">
+        <div className="w-7 h-7 rounded-full bg-[#334A46] text-white text-[12px] font-extrabold flex items-center justify-center flex-shrink-0">{n}</div>
+        <div className="text-[11px] font-bold uppercase tracking-[.15em] text-[#6B9E8A]">{label}</div>
+      </div>
+      <h2 className="text-[1.5rem] md:text-[1.9rem] font-extrabold text-[#334A46] leading-tight">{title}</h2>
+      {sub ? <p className="text-[14px] text-[#3D4F5F] leading-relaxed mt-3 max-w-3xl">{sub}</p> : null}
+    </div>
+  );
+
+  const Sub = ({ children }: { children: React.ReactNode }) => (
+    <div className="text-[12px] font-bold uppercase tracking-[.1em] text-[#334A46] mb-3 pb-2 border-b border-[#334A46]/10">{children}</div>
+  );
+
+  const Card = ({ children }: { children: React.ReactNode }) => (
+    <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4 mb-4">{children}</div>
+  );
+
+  const Note = ({ tone = 'green', children }: { tone?: 'green' | 'amber'; children: React.ReactNode }) => (
+    <div className={`rounded-2xl p-5 mb-8 border ${tone === 'green' ? 'bg-[#E2EFDA] border-[#2E7D32]/20' : 'bg-[#FFF8E1] border-[#F57F17]/20'}`}>
+      <p className="text-[14px] text-[#334A46] leading-relaxed">{children}</p>
+    </div>
+  );
+
+  const numbered = (rows: [string, string][]) => (
     <div className="space-y-3">
       {rows.map(([title, desc], i) => (
         <div key={i} className="bg-white rounded-2xl border border-[#334A46]/[.08] p-5 flex gap-4 hover:bg-[#FAFAFA]/60 transition-colors">
@@ -3454,60 +3479,49 @@ function AgendaView() {
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
       {/* Header */}
-      <div className="mb-12">
+      <div className="mb-14 pb-8 border-b border-[#334A46]/10">
         <div className="text-[10px] font-bold uppercase tracking-[.15em] text-[#6B9E8A] mb-2">Family Meeting</div>
-        <div className="text-[2rem] md:text-[2.5rem] font-extrabold text-[#334A46] leading-tight">Agenda Items</div>
-        <div className="text-[14px] text-[#3D4F5F] mt-1">Distribution plan, the funding picture &amp; next steps &middot; David, Will &amp; Ben</div>
+        <div className="text-[2rem] md:text-[2.75rem] font-extrabold text-[#334A46] leading-tight">Agenda Items</div>
+        <div className="text-[14px] text-[#3D4F5F] mt-2">Distribution plan, the funding picture &amp; next steps &middot; David, Will &amp; Ben</div>
       </div>
 
-      {/* 1 · Monthly Distribution Plan */}
-      <Section id="agenda-distribution" className="mb-14">
-        <SectionLabel>1 &middot; Priority</SectionLabel>
-        <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-2">Monthly Distribution Plan for David</h2>
-        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-6">
-          Replace the lumpy quarterly Lower Pyne checks and ad hoc draws with <span className="font-bold">one automatic monthly
-          transfer through Andrew</span> &mdash; so David&rsquo;s income lands like a paycheck, every month, with no gaps.
-        </p>
+      {/* 1 — Monthly plan */}
+      <Section id="agenda-distribution" className="mb-16">
+        <Head n="1" label="Priority" title="Monthly Distribution Plan for David"
+          sub="Replace the lumpy quarterly Lower Pyne checks and ad hoc draws with one automatic monthly transfer through Andrew — the same $330K a year David receives today, just arriving like a paycheck." />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Stat value="~$27.5K/mo" label="Total Monthly to David" accent />
-          <Stat value="$14K/mo" label="From Lower Pyne ($168K/yr)" />
-          <Stat value="$10K/mo" label="From Pyn Reserve ($120K/yr)" />
+          <Stat value="$14K/mo" label="Lower Pyne ($168K/yr)" />
+          <Stat value="$10K/mo" label="Pyn Reserve ($119K/yr)" />
           <Stat value="$3.6K/mo" label="Social Security ($43K/yr)" />
-        </div>
-        <div className="mt-4 text-[13px] text-[#3D4F5F]">
-          Same <span className="font-bold">$330K/year</span> David receives today &mdash; just paid on a steady monthly
-          cadence instead of quarterly Lower Pyne checks plus ad hoc draws.
         </div>
       </Section>
 
-      {/* 2 · The Funding Picture */}
-      <Section id="agenda-picture" className="mb-14">
-        <SectionLabel>2 &middot; The Funding Picture</SectionLabel>
-        <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-2">Where It Sits, What Dad Needs &amp; 2028</h2>
-        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
-          The plan is well-funded. Here&rsquo;s the whole picture &mdash; what Pyn holds today, the $330K David receives each
-          year, exactly where each dollar comes from, and how the mix shifts so the reserve stops doing the heavy lifting.
-        </p>
+      {/* 2 — Funding picture */}
+      <Section id="agenda-picture" className="mb-16">
+        <Head n="2" label="The Funding Picture" title="Where It Sits, What Dad Needs & 2028"
+          sub="What Pyn holds today, where each dollar of the $330K comes from, and how the mix shifts so the reserve stops doing the heavy lifting." />
 
-        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">Where Pyn sits today</h3>
+        <Sub>Where the money sits today</Sub>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-          <Stat value="~$1.2M" label="Pyn Cash &amp; Investments" accent />
-          <Stat value="$1.5M+" label="Lower Pyne Cash (LP Level)" />
-          <Stat value="60%" label="Pyn&rsquo;s Share of Lower Pyne" />
-          <Stat value="~$30K/yr" label="Return on Pyn Balance" />
+          <Stat value="~$1.2M" label="Pyn Accounts (now with Andrew)" accent />
+          <Stat value="$1.5M+" label="Lower Pyne Reserve" />
+          <Stat value="100% cash" label="LP Reserve Currently Uninvested" />
+          <Stat value="60%" label="Pyn's Share of Lower Pyne" />
         </div>
-        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
-          Pyn holds roughly <span className="font-bold">$1.2M</span> in cash and investments, and owns 60% of Lower Pyne,
-          which itself carries well over <span className="font-bold">$1.5M</span> in cash. That balance also earns
-          ~$30K/year, which quietly offsets much of what David draws.
-        </p>
+        <Note tone="amber">
+          <span className="font-bold">The Lower Pyne reserve is sitting entirely in cash.</span> More than $1.5M is earning
+          essentially nothing. Simply putting it into treasuries or a money market at ~4% would generate roughly
+          <span className="font-bold"> $60K a year to the LP</span> (~$36K to Pyn) &mdash; without selling anything, changing
+          the reserve level, or touching a single distribution.
+        </Note>
 
-        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">What David receives &mdash; and where it comes from</h3>
-        <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4 mb-3">
+        <Sub>What David receives &mdash; and where it comes from</Sub>
+        <Card>
           <Table
             headers={['Source', 'Monthly', 'Annual', 'How it arrives']}
             rows={[
-              ['Lower Pyne distributions', '$14,000', fmt(168000), 'Quarterly today \u2192 monthly'],
+              ['Lower Pyne distributions', '$14,000', fmt(168000), 'Quarterly today → monthly'],
               ['Draw from Pyn reserve', '$10,000', fmt(119000), 'From Pyn cash'],
               ['Social Security', '$3,600', fmt(43000), 'Monthly'],
               [
@@ -3518,101 +3532,75 @@ function AgendaView() {
               ],
             ]}
           />
-        </div>
+        </Card>
         <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
-          Of the $330K, about <span className="font-bold">$211K is recurring income</span> (Lower Pyne + Social Security).
-          The remaining <span className="font-bold">~$119K &mdash; the $10K/month &mdash; comes out of Pyn&rsquo;s reserve.</span>{' '}
-          After the ~$30K the balance earns, the true annual cost to the reserve is closer to <span className="font-bold">$90K</span>.
+          About <span className="font-bold">$211K is recurring income</span> (Lower Pyne + Social Security). The remaining
+          <span className="font-bold"> ~$119K &mdash; the $10K/month &mdash; comes out of Pyn&rsquo;s reserve.</span>
         </p>
 
-        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">What happens in 2028</h3>
+        <Sub>What happens in 2028</Sub>
         <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-4">
-          David&rsquo;s $330K stays constant &mdash; what changes is the <span className="font-bold">mix</span>. Two new streams
-          arrive in 2028 (RMDs as David turns 73, and Nassau 195 distributions), and Lower Pyne grows ~3%/yr. Each one
-          replaces a dollar that used to come from the reserve:
+          David&rsquo;s $330K stays constant &mdash; the <span className="font-bold">mix</span> is what changes. RMDs begin
+          (David turns 73), Nassau 195 starts distributing, and Lower Pyne grows ~3%/yr. Each new dollar replaces a dollar
+          that used to come from the reserve:
         </p>
-        <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4 mb-3">
+        <Card>
           <Table
             headers={['Year', 'Soc. Sec.', 'RMDs', 'Lower Pyne', 'Nassau 195', 'From Reserve', 'Total']}
             rows={[
-              ['2026', fmt(43000), '\u2014', fmt(168000), '\u2014', <span key="a" className="font-semibold text-[#B26A00]">{fmt(119000)}</span>, fmt(330000)],
-              ['2027', fmt(43000), '\u2014', fmt(173040), '\u2014', <span key="b" className="font-semibold text-[#B26A00]">{fmt(113960)}</span>, fmt(330000)],
+              ['2026', fmt(43000), '—', fmt(168000), '—', <span key="a" className="font-semibold text-[#B26A00]">{fmt(119000)}</span>, fmt(330000)],
+              ['2027', fmt(43000), '—', fmt(173040), '—', <span key="b" className="font-semibold text-[#B26A00]">{fmt(113960)}</span>, fmt(330000)],
               [<span key="y" className="font-bold text-[#334A46]">2028</span>, fmt(43000), fmt(26834), fmt(178231), fmt(26400), <span key="c" className="font-semibold text-[#2E7D32]">{fmt(55535)}</span>, fmt(330000)],
               ['2030', fmt(43000), fmt(29465), fmt(189085), fmt(26400), <span key="d" className="font-semibold text-[#2E7D32]">{fmt(42050)}</span>, fmt(330000)],
               ['2032', fmt(43000), fmt(32065), fmt(200601), fmt(26400), <span key="e" className="font-semibold text-[#2E7D32]">{fmt(27934)}</span>, fmt(330000)],
             ]}
           />
-        </div>
-        <div className="bg-[#E2EFDA] rounded-2xl border border-[#2E7D32]/20 p-5">
-          <p className="text-[14px] text-[#334A46] leading-relaxed">
-            The reserve draw falls from <span className="font-bold">~$119K to ~$56K in 2028</span>, and to
-            <span className="font-bold"> ~$28K by 2032</span> &mdash; by which point Pyn&rsquo;s own investment returns
-            (~$25&ndash;30K/yr) essentially cover it and the balance stops eroding. The 2029 refinancing adds materially on
-            top. <span className="font-medium">The one dependency to watch is the Nassau 195 lease-up; if it slips, the
-            2028 step-down slips with it.</span>
-          </p>
-        </div>
+        </Card>
+        <Note>
+          The reserve draw falls from <span className="font-bold">~$119K to ~$56K in 2028</span>, and to
+          <span className="font-bold"> ~$28K by 2032</span>. The one dependency to watch is the Nassau 195 lease-up &mdash;
+          if it slips, the 2028 step-down slips with it.
+        </Note>
       </Section>
 
-      {/* 3 · The Unlock for Ben & Will */}
-      <Section id="agenda-unlock" className="mb-14">
-        <SectionLabel>3 &middot; The Unlock for Ben &amp; Will</SectionLabel>
-        <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-2">Where the Room Actually Comes From</h2>
-        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-6">
-          David&rsquo;s $330K absorbs essentially all of Pyn&rsquo;s recurring income for the next decade &mdash; on operating
-          cash flow alone, there is no meaningful surplus until the <span className="font-bold">mid-2030s</span>. The room for
-          Ben &amp; Will comes from somewhere else: a stack of <span className="font-bold">capital events</span>, plus RMDs
-          taking pressure off the draw.
-        </p>
+      {/* 3 — Unlock */}
+      <Section id="agenda-unlock" className="mb-16">
+        <Head n="3" label="For Ben & Will" title="Where the Room Actually Comes From"
+          sub="David's $330K absorbs nearly all of Pyn's recurring income for the next decade — on operating cash flow alone there is no meaningful surplus until the mid-2030s. The room comes from capital events instead, plus RMDs taking pressure off the draw." />
 
-        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">The capital-event stack</h3>
-        <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4 mb-3">
+        <Sub>The capital-event stack</Sub>
+        <Card>
           <Table
             headers={['Event', 'Timing', 'To Lower Pyne', 'To Pyn (60%)', 'Will / Ben Each']}
             rows={[
               ['Bordentown sale', <span key="a" className="text-[#2E7D32] font-semibold">Closed</span>, fmt(487600), fmt(292560), fmt(58512)],
-              ['16 Chambers sale', 'In progress', '$561K \u2013 $834K', '$337K \u2013 $500K', '$67K \u2013 $100K'],
-              ['Excess Lower Pyne cash', <span key="b" className="text-[#2E7D32] font-semibold">Available now</span>, '$1.5M+', '$900K+', '$180K+'],
+              ['16 Chambers sale', 'In progress', '$561K – $834K', '$337K – $500K', '$67K – $100K'],
               ['2029 refinance cash-out', '2029', fmt(1400000), fmt(840000), fmt(168000)],
-              ['195 Nassau sale', 'Future', '$1.2M \u2013 $2.2M', '$720K \u2013 $1.32M', '$144K \u2013 $264K'],
+              ['195 Nassau sale', 'Future', '$1.2M – $2.2M', '$720K – $1.32M', '$144K – $264K'],
               [
                 <span key="t" className="font-bold text-[#334A46]">Total stack</span>,
                 '',
-                <span key="l" className="font-bold text-[#334A46]">$5.1M \u2013 $6.4M</span>,
-                <span key="p" className="font-bold text-[#334A46]">$3.1M \u2013 $3.9M</span>,
-                <span key="w" className="font-bold text-[#2E7D32]">$618K \u2013 $771K</span>,
+                <span key="l" className="font-bold text-[#334A46]">$3.6M – $4.9M</span>,
+                <span key="p" className="font-bold text-[#334A46]">$2.2M – $3.0M</span>,
+                <span key="w" className="font-bold text-[#2E7D32]">$438K – $591K</span>,
               ],
             ]}
           />
-        </div>
+        </Card>
         <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
-          Across the full stack, Ben and Will are each looking at roughly <span className="font-bold">$620K&ndash;$770K</span>{' '}
-          &mdash; an order of magnitude more than the ~$35&ndash;45K/yr that operating surplus might eventually produce.
-          <span className="font-medium"> This is where the real money is, and it is a capital-allocation decision, not a
-          waiting game.</span>
+          Across the stack, Ben and Will are each looking at roughly <span className="font-bold">$440K&ndash;$590K</span> over
+          time &mdash; far more than operating surplus would ever produce. <span className="font-medium">This is a
+          capital-allocation decision, not a waiting game.</span>
         </p>
 
-        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">RMDs &amp; Nassau relieve the draw</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-          <Stat value="2028" label="RMDs Begin (Age 73)" accent />
-          <Stat value="~$27K/yr" label="RMD Relief in 2028" />
-          <Stat value="~$291K" label="Cumulative RMDs 2028-36" />
-          <Stat value="~$26K/yr" label="Nassau 195 to Pyn" />
-        </div>
-        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
-          Every RMD dollar is a dollar Pyn no longer has to pay David &mdash; his own retirement accounts cover it instead.
-          That is <span className="font-bold">~$291K of pressure taken off the reserve between 2028 and 2036</span>, on top
-          of Nassau 195&rsquo;s ~$26K/yr of recurring distributions. Together they are what let the reserve stabilize.
-        </p>
-
-        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">Proposal: an RMD-triggered minimum distribution</h3>
+        <Sub>The 2028 trigger &mdash; an RMD-linked minimum distribution</Sub>
         <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-4">
-          In 2028 David&rsquo;s required minimum distributions begin, and they cover part of his needs directly &mdash; so his
-          draw on Pyn falls from <span className="font-bold">{fmt(287000)} to {fmt(260166)}</span>, freeing
-          <span className="font-bold"> {fmt(26834)}</span> that Pyn no longer has to pay out. That freed amount is the natural
-          trigger: <span className="font-bold">distribute at least the RMD-freed amount pro-rata, every year, starting 2028.</span>
+          When RMDs begin in 2028 they cover part of David&rsquo;s needs directly, so his draw on Pyn falls from
+          <span className="font-bold"> {fmt(287000)} to {fmt(260166)}</span> &mdash; freeing
+          <span className="font-bold"> {fmt(26834)}</span> Pyn no longer has to pay out. That is the natural trigger:
+          <span className="font-bold"> distribute at least the RMD-freed amount pro-rata, every year, starting 2028.</span>
         </p>
-        <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4 mb-3">
+        <Card>
           <Table
             headers={['Year', 'Freed by RMD', 'David 50%', 'Will 20%', 'Ben 20%', 'Uncle 10%']}
             rows={[
@@ -3630,52 +3618,47 @@ function AgendaView() {
               ],
             ]}
           />
-        </div>
-        <div className="bg-[#E2EFDA] rounded-2xl border border-[#2E7D32]/20 p-5 mb-8">
-          <p className="text-[14px] text-[#334A46] leading-relaxed">
-            <span className="font-bold">Why this one is hard to argue with:</span> it is self-funding &mdash; the money is freed
-            by David&rsquo;s own retirement accounts, so it costs Pyn nothing incremental. It is automatic, tied to an
-            IRS-mandated event rather than anyone&rsquo;s discretion. And it finally establishes the mechanism and the habit of
-            distributing pro-rata. The amounts are modest (~$5&ndash;8K each per year), but they set the precedent that the
-            capital events then build on.
-          </p>
-        </div>
+        </Card>
+        <Note>
+          <span className="font-bold">Why this one is hard to argue with:</span> it is self-funding &mdash; the money is freed
+          by David&rsquo;s own retirement accounts, so it costs Pyn nothing incremental. It is automatic, tied to an
+          IRS-mandated event rather than anyone&rsquo;s discretion. The amounts are modest, but they establish the mechanism
+          and the precedent that the capital events then build on.
+        </Note>
 
-        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">The three levers</h3>
+        <Sub>What to decide</Sub>
         <div className="grid md:grid-cols-3 gap-4">
           <div className="bg-[#E2EFDA] rounded-2xl border border-[#2E7D32]/20 p-5">
-            <div className="text-[13px] font-extrabold text-[#2E7D32] mb-2">1 &middot; Distribute the excess cash now</div>
-            <div className="text-[13px] text-[#334A46] leading-relaxed">Over $1.5M is already sitting at the LP level. It does not depend on any pivot &mdash; this is the fastest path.</div>
+            <div className="text-[13px] font-extrabold text-[#2E7D32] mb-2">Put the reserve to work</div>
+            <div className="text-[13px] text-[#334A46] leading-relaxed">$1.5M+ sitting in cash. Treasuries or a money market at ~4% adds ~$60K/yr to the LP with no change to the reserve level.</div>
           </div>
           <div className="bg-[#E2EFDA] rounded-2xl border border-[#2E7D32]/20 p-5">
-            <div className="text-[13px] font-extrabold text-[#2E7D32] mb-2">2 &middot; Earmark the 2029 refi</div>
+            <div className="text-[13px] font-extrabold text-[#2E7D32] mb-2">Earmark the 2029 refi</div>
             <div className="text-[13px] text-[#334A46] leading-relaxed">Decide Ben &amp; Will&rsquo;s share <span className="italic">before</span> the proceeds get absorbed into reinvestment or the partner buyout.</div>
           </div>
           <div className="bg-[#FFF8E1] rounded-2xl border border-[#F57F17]/20 p-5">
-            <div className="text-[13px] font-extrabold text-[#B26A00] mb-2">3 &middot; Hold David&rsquo;s draw flat</div>
-            <div className="text-[13px] text-[#334A46] leading-relaxed">The plan works because the $330K stays fixed while income grows. Every increase is a dollar that never reaches the next generation.</div>
+            <div className="text-[13px] font-extrabold text-[#B26A00] mb-2">Hold David&rsquo;s draw flat</div>
+            <div className="text-[13px] text-[#334A46] leading-relaxed">The plan converges because the $330K stays fixed while income grows. Every increase is a dollar that never reaches the next generation.</div>
           </div>
         </div>
       </Section>
 
-      {/* 3 · Cleanup */}
-      <Section id="agenda-cleanup" className="mb-14">
-        <SectionLabel>4 &middot; Cleanup &amp; Documentation</SectionLabel>
-        <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-5">Getting the Structure Clean</h2>
-        {listCard([
+      {/* 4 — Cleanup */}
+      <Section id="agenda-cleanup" className="mb-16">
+        <Head n="4" label="Cleanup & Documentation" title="Getting the Structure Clean" />
+        {numbered([
           ['Operating agreement', 'Reconcile the pro-rata terms with the actual 1% practice, then sign the execution copy. Attorney: Troutman Pepper (who drafted it).'],
           ['K-1 questions for Dan Duffy', 'Why did our profit/loss allocation drop from 20% to 1% in 2020? Provide a capital-account rollforward for all members, and distributions by member.'],
-          ['Account titling', "Confirm which accounts referred to as “Pyn accounts” are actually titled to the LLC vs. held in David’s personal name."],
+          ['Account titling', 'Confirm which accounts referred to as "Pyn accounts" are actually titled to the LLC vs. held in David’s personal name.'],
           ['Capital accounts', 'Get them maintained going forward — they were blank on most K-1s, then showed $74,480 in 2022.'],
-          ['Prerequisite for kids’ distributions', "Ben & Will can’t cleanly receive distributions while allocated 1% — reconcile this first."],
+          ['Prerequisite for distributions', 'Ben & Will cannot cleanly receive distributions while allocated 1% of profit — reconcile this first.'],
         ])}
       </Section>
 
-      {/* 4 · Estate */}
-      <Section id="agenda-estate" className="mb-14">
-        <SectionLabel>5 &middot; Estate &amp; Next-Generation Goals</SectionLabel>
-        <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-5">Protecting the Plan</h2>
-        {listCard([
+      {/* 5 — Estate */}
+      <Section id="agenda-estate" className="mb-16">
+        <Head n="5" label="Estate & Next Generation" title="Protecting the Plan" />
+        {numbered([
           ['Confirm the estate-freeze intent', 'Kids hold the 20% equity and appreciation; David keeps the income while alive. Confirm this is the intent and document it properly.'],
           ['Will', 'Confirm David has a current, valid will in place.'],
           ['Life insurance / ILIT', 'Confirm the $1.5M MetLife policy and whether it sits in an ILIT for estate-tax efficiency.'],
@@ -3684,22 +3667,22 @@ function AgendaView() {
         ])}
       </Section>
 
-      {/* 5 · Action Items */}
+      {/* 6 — Actions */}
       <Section id="agenda-actions" className="mb-8">
-        <SectionLabel>6 &middot; Action Items</SectionLabel>
-        <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-5">Next Steps</h2>
-        <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4">
+        <Head n="6" label="Next Steps" title="Action Items" />
+        <Card>
           <Table
             headers={['Action', 'Owner']}
             rows={[
               ['Set up David’s monthly auto-distribution (~$27.5K/mo)', 'Andrew'],
-              ['Adopt a written distribution policy (reserve + regular schedule)', 'David / All'],
+              ['Move the Lower Pyne cash reserve into treasuries / money market', 'David'],
+              ['Adopt the RMD-linked minimum distribution from 2028', 'David / All'],
               ['Reconcile & sign the operating agreement', 'Will + attorney'],
               ['Send K-1 / capital-account questions to Dan Duffy', 'Will'],
               ['Confirm will, MetLife/ILIT & succession', 'David'],
             ]}
           />
-        </div>
+        </Card>
       </Section>
     </div>
   );
