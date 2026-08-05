@@ -3437,143 +3437,148 @@ function PynView() {
 // ═══════════════════════════════════════════════════════════
 
 function AgendaView() {
+  const listCard = (rows: [string, string][]) => (
+    <div className="space-y-3">
+      {rows.map(([title, desc], i) => (
+        <div key={i} className="bg-white rounded-2xl border border-[#334A46]/[.08] p-5 flex gap-4 hover:bg-[#FAFAFA]/60 transition-colors">
+          <div className="text-[13px] font-extrabold text-[#6B9E8A] w-5 flex-shrink-0 pt-0.5">{i + 1}</div>
+          <div>
+            <div className="text-[14px] font-bold text-[#334A46] mb-1">{title}</div>
+            <div className="text-[13px] text-[#3D4F5F] leading-relaxed">{desc}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-12">
         <div className="text-[10px] font-bold uppercase tracking-[.15em] text-[#6B9E8A] mb-2">Family Meeting</div>
         <div className="text-[2rem] md:text-[2.5rem] font-extrabold text-[#334A46] leading-tight">Agenda Items</div>
-        <div className="text-[14px] text-[#3D4F5F] mt-1">Distribution plan, capital allocation, cleanup &amp; action items &middot; David, Will &amp; Ben</div>
+        <div className="text-[14px] text-[#3D4F5F] mt-1">Distribution plan, the funding picture &amp; next steps &middot; David, Will &amp; Ben</div>
       </div>
 
-      {/* ══ FAMILY MEETING — DISTRIBUTION PLAN & ACTION ITEMS ══ */}
-      <Section id="agenda-items" className="mb-8">
-        <SectionLabel>Family Meeting &middot; Agenda</SectionLabel>
-        <h2 className="text-[1.5rem] md:text-[2rem] font-extrabold text-[#334A46] mb-2">Distribution Plan &amp; Action Items</h2>
+      {/* 1 · Monthly Distribution Plan */}
+      <Section id="agenda-distribution" className="mb-14">
+        <SectionLabel>1 &middot; Priority</SectionLabel>
+        <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-2">Monthly Distribution Plan for David</h2>
+        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-6">
+          Replace the lumpy quarterly Lower Pyne checks and ad hoc draws with <span className="font-bold">one automatic monthly
+          transfer through Andrew</span> &mdash; so David&rsquo;s income lands like a paycheck, every month, with no gaps.
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <Stat value="~$27.5K/mo" label="Steady Monthly Transfer" accent />
+          <Stat value="~$330K/yr" label="Total Annual Income" />
+          <Stat value="~$25K/mo" label="Covers Living Expenses" />
+          <Stat value="Quarterly &rarr; Monthly" label="Smoother Cadence" />
+        </div>
+      </Section>
+
+      {/* 2 · The Funding Picture */}
+      <Section id="agenda-picture" className="mb-14">
+        <SectionLabel>2 &middot; The Funding Picture</SectionLabel>
+        <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-2">Where It Sits, What Dad Needs &amp; 2028</h2>
         <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
-          Working plan for David, Will &amp; Ben. The account transfer to March Wealth is complete &mdash; this is what comes next:
-          steady income for David, a real distribution policy for the family, and the cleanup that makes it possible.
+          The plan is well-funded. Here&rsquo;s the full picture &mdash; what Pyn holds today, what David needs each year,
+          where that money comes from, and how it becomes self-sustaining by 2028.
         </p>
 
-        {/* 1. David's income + 2028 pivot */}
-        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">1 &middot; David&rsquo;s Income &mdash; Steady Monthly &amp; the 2028 Pivot</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-5">
-          <Stat value="~$27.5K/mo" label="Target Auto-Distribution" accent />
-          <Stat value="~$60K/yr" label="Cushion Bridge 2026-27" />
-          <Stat value="2028" label="Self-Sufficiency Pivot" />
-          <Stat value="~$1.2M" label="Pyn Cushion" />
+        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">Where Pyn sits today</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+          <Stat value="~$1.2M" label="Pyn Cash Accounts" />
+          <Stat value="~$1.5M+" label="Lower Pyne Cash (LP)" />
+          <Stat value="60%" label="Pyn&rsquo;s Lower Pyne Stake" />
+          <Stat value="Strong" label="Overall Liquidity" />
         </div>
-        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-4">
-          Replace the lumpy quarterly checks with one automatic ~$27,500/month transfer through Andrew. Recurring income
-          (~$211K) runs below spending (~$300K) until 2028 &mdash; when RMDs, Nassau 195 distributions, and ~3%/yr Lower Pyne
-          growth converge to close the gap. The cushion bridges the two years in between.
+        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
+          Between Pyn&rsquo;s own accounts (~$1.2M) and its 60% share of Lower Pyne &mdash; which itself holds well over $1.5M
+          in cash &mdash; there is ample liquidity to fund David comfortably and, in time, the next generation.
         </p>
-        <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4 mb-8">
+
+        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">What David needs &amp; where it comes from</h3>
+        <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4 mb-3">
+          <Table
+            headers={['Source', 'Annual', 'Timing']}
+            rows={[
+              ['Lower Pyne distributions', '~$168K', 'Quarterly'],
+              ['Social Security', '~$43K', 'Monthly'],
+              [<span className="font-semibold text-[#334A46]">Draw from Pyn cushion</span>, <span className="font-semibold">~$90K</span>, 'Bridge'],
+              [<span className="font-bold text-[#334A46]">Total to David</span>, <span className="font-bold text-[#334A46]">~$300K+</span>, ''],
+            ]}
+          />
+        </div>
+        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
+          David&rsquo;s steady income (Lower Pyne + Social Security &asymp; $211K) covers most of his ~$300K in needs; the
+          balance is bridged by a modest draw from Pyn&rsquo;s cash reserve &mdash; exactly what that reserve is for. It&rsquo;s
+          a short bridge to 2028, not a structural shortfall.
+        </p>
+
+        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">What happens in 2028</h3>
+        <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4 mb-3">
           <Table
             headers={['Year', 'David’s Income', 'Expenses', 'Gap']}
             rows={[
-              ['2026', '~$241K', '~$300K', <span className="text-[#C62828] font-semibold">($59K)</span>],
-              ['2027', '~$248K', '~$308K', <span className="text-[#C62828] font-semibold">($60K)</span>],
+              ['2026', '~$241K', '~$300K', <span className="text-[#B26A00] font-semibold">($59K)</span>],
+              ['2027', '~$248K', '~$308K', <span className="text-[#B26A00] font-semibold">($60K)</span>],
               [<span className="font-bold text-[#334A46]">2028 &mdash; pivot</span>, '~$305K', '~$315K', <span className="text-[#B26A00] font-semibold">($10K)</span>],
-              ['2030', '~$322K', '~$331K', <span className="text-[#B26A00] font-semibold">($9K)</span>],
+              ['2030', '~$322K', '~$331K', <span className="text-[#2E7D32] font-semibold">near even</span>],
               ['2032', '~$340K', '~$348K', <span className="text-[#2E7D32] font-semibold">surplus</span>],
             ]}
           />
-          <div className="text-[12px] text-[#666] mt-3 px-1">2028: RMDs begin (age 73) + Nassau 195 starts distributing. Dependency to watch &mdash; Nassau lease-up; if it slips, the pivot slips.</div>
         </div>
-
-        {/* 2. The problem */}
-        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">2 &middot; The Problem &mdash; Idle Cash, Nothing to Ben &amp; Will</h3>
-        <div className="bg-[#FFEBEE] rounded-2xl border border-[#C62828]/20 p-6 mb-8">
-          <div className="grid grid-cols-3 gap-4 text-center mb-4">
-            <div>
-              <div className="text-[1.4rem] md:text-[1.6rem] font-extrabold text-[#C62828]">&gt; $1.5M</div>
-              <div className="text-[12px] font-semibold text-[#334A46] mt-1">Idle cash in Lower Pyne</div>
-            </div>
-            <div>
-              <div className="text-[1.4rem] md:text-[1.6rem] font-extrabold text-[#C62828]">$0</div>
-              <div className="text-[12px] font-semibold text-[#334A46] mt-1">Distributed to Ben &amp; Will</div>
-            </div>
-            <div>
-              <div className="text-[1.4rem] md:text-[1.6rem] font-extrabold text-[#334A46]">20% each</div>
-              <div className="text-[12px] font-semibold text-[#334A46] mt-1">Their ownership</div>
-            </div>
-          </div>
-          <p className="text-[14px] text-[#3D4F5F] leading-relaxed">
-            Lower Pyne holds more cash than it needs, while Ben &amp; Will &mdash; 20% owners each &mdash; receive nothing and are
-            taxed on the income via their K-1s. This is a <span className="font-bold">distribution-discipline problem, not an
-            affordability problem.</span> The capacity is already there.
-          </p>
-        </div>
-
-        {/* 3. The fix */}
-        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">3 &middot; The Fix &mdash; A Distribution Policy</h3>
-        <div className="bg-[#E2EFDA] rounded-2xl border border-[#2E7D32]/20 p-6 mb-8">
-          <p className="text-[14px] text-[#334A46] leading-relaxed">
-            Replace ad hoc discretion with a rule: keep a <span className="font-bold">target reserve (~$700K-1M)</span> in the
-            LP/Pyn, then <span className="font-bold">distribute cash above it pro-rata, on a set schedule</span> (annual or
-            quarterly). That funds David&rsquo;s needs <span className="italic">and</span> gives Ben &amp; Will their 20% share
-            automatically &mdash; and stops idle cash from piling up.
-          </p>
-        </div>
-
-        {/* 4. Capital allocation */}
-        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">4 &middot; Capital Allocation &mdash; Excess Cash &amp; the 2029 Refinance</h3>
-        <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4 mb-4">
-          <Table
-            headers={['Source', 'LP-Level', 'Pyn 60%', 'Will / Ben Each']}
-            rows={[
-              ['Excess Lower Pyne cash (now)', '> $1.5M', '~$0.9M+', '~$180K+'],
-              ['2029 refinance cash-out', '~$1.4M', '~$840K', '~$168K'],
-            ]}
-          />
-        </div>
-        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
-          Three competing uses &mdash; the decision is the split: <span className="font-bold">(1)</span> distribute (David / Ben / Will),
-          <span className="font-bold"> (2)</span> reinvest in new deals, or <span className="font-bold">(3)</span> buy out the ~$1.2M
-          minority partner (lifts Pyn&rsquo;s LP stake 60% &rarr; 80%).
+        <p className="text-[14px] text-[#3D4F5F] leading-relaxed">
+          By 2028, RMDs (David turns 73) and Nassau 195 distributions come online, closing the gap to ~$10K. From there David
+          is essentially self-funding, the cushion stops drawing down, and Pyn&rsquo;s surplus can begin flowing to Ben &amp;
+          Will (~$35&ndash;45K each, growing over time). <span className="font-medium">The one dependency to watch: Nassau 195
+          lease-up &mdash; if it slips, the pivot slips.</span>
         </p>
+      </Section>
 
-        {/* 5 & 6. Cleanup + Estate */}
-        <div className="grid md:grid-cols-2 gap-4 mb-8">
-          <div className="bg-[#FFF8E1] rounded-2xl border border-[#F57F17]/20 p-5">
-            <div className="text-[11px] font-bold uppercase tracking-[.08em] text-[#B26A00] mb-3">5 &middot; Cleanup (Prerequisite)</div>
-            <ul className="space-y-2 text-[13px] text-[#3D4F5F] leading-relaxed list-disc pl-5">
-              <li>Reconcile &amp; sign the operating agreement (pro-rata clause vs. 1% practice) &mdash; attorney: Troutman Pepper.</li>
-              <li>K-1 questions for Dan Duffy: why 20% &rarr; 1% in 2020; capital-account rollforward; distributions by member.</li>
-              <li>Confirm which &ldquo;Pyn accounts&rdquo; are personal vs. LLC.</li>
-              <li className="font-semibold text-[#B26A00]">Ben &amp; Will can&rsquo;t cleanly receive distributions while allocated 1% &mdash; fix first.</li>
-            </ul>
-          </div>
-          <div className="bg-[#FAFAFA] rounded-2xl border border-[#334A46]/[.08] p-5">
-            <div className="text-[11px] font-bold uppercase tracking-[.08em] text-[#334A46] mb-3">6 &middot; Estate &amp; Next-Gen Goals</div>
-            <ul className="space-y-2 text-[13px] text-[#3D4F5F] leading-relaxed list-disc pl-5">
-              <li>Confirm the estate-freeze intent (kids hold equity; David keeps income while alive) and document it.</li>
-              <li>Confirm David&rsquo;s current will status.</li>
-              <li>Confirm the $1.5M MetLife policy / ILIT.</li>
-              <li>Manager succession for Pyn.</li>
-            </ul>
-          </div>
-        </div>
+      {/* 3 · Cleanup */}
+      <Section id="agenda-cleanup" className="mb-14">
+        <SectionLabel>3 &middot; Cleanup &amp; Documentation</SectionLabel>
+        <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-5">Getting the Structure Clean</h2>
+        {listCard([
+          ['Operating agreement', 'Reconcile the pro-rata terms with the actual 1% practice, then sign the execution copy. Attorney: Troutman Pepper (who drafted it).'],
+          ['K-1 questions for Dan Duffy', 'Why did our profit/loss allocation drop from 20% to 1% in 2020? Provide a capital-account rollforward for all members, and distributions by member.'],
+          ['Account titling', "Confirm which accounts referred to as “Pyn accounts” are actually titled to the LLC vs. held in David’s personal name."],
+          ['Capital accounts', 'Get them maintained going forward — they were blank on most K-1s, then showed $74,480 in 2022.'],
+          ['Prerequisite for kids’ distributions', "Ben & Will can’t cleanly receive distributions while allocated 1% — reconcile this first."],
+        ])}
+      </Section>
 
-        {/* 7. Action items */}
-        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">7 &middot; Action Items</h3>
-        <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4 mb-4">
+      {/* 4 · Estate */}
+      <Section id="agenda-estate" className="mb-14">
+        <SectionLabel>4 &middot; Estate &amp; Next-Generation Goals</SectionLabel>
+        <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-5">Protecting the Plan</h2>
+        {listCard([
+          ['Confirm the estate-freeze intent', 'Kids hold the 20% equity and appreciation; David keeps the income while alive. Confirm this is the intent and document it properly.'],
+          ['Will', 'Confirm David has a current, valid will in place.'],
+          ['Life insurance / ILIT', 'Confirm the $1.5M MetLife policy and whether it sits in an ILIT for estate-tax efficiency.'],
+          ['Manager succession', 'Decide who runs Pyn if David steps back or on his passing.'],
+          ['Gifting & valuation', 'If the 20% interests were gifted, confirm the valuations and any Form 709 filings are in order.'],
+        ])}
+      </Section>
+
+      {/* 5 · Action Items */}
+      <Section id="agenda-actions" className="mb-8">
+        <SectionLabel>5 &middot; Action Items</SectionLabel>
+        <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-5">Next Steps</h2>
+        <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4">
           <Table
             headers={['Action', 'Owner']}
             rows={[
               ['Set up David’s monthly auto-distribution (~$27.5K/mo)', 'Andrew'],
-              ['Adopt a distribution policy (reserve + pro-rata excess)', 'David / All'],
+              ['Adopt a written distribution policy (reserve + regular schedule)', 'David / All'],
               ['Reconcile & sign the operating agreement', 'Will + attorney'],
               ['Send K-1 / capital-account questions to Dan Duffy', 'Will'],
-              ['Decide split of excess cash + 2029 refi', 'All'],
-              ['Confirm will + MetLife/ILIT status', 'David'],
-              ['Set annual Lower Pyne investment budget', 'All'],
+              ['Confirm will, MetLife/ILIT & succession', 'David'],
             ]}
           />
         </div>
       </Section>
-
     </div>
   );
 }
