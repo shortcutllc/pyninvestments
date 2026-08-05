@@ -3595,15 +3595,51 @@ function AgendaView() {
         <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">RMDs &amp; Nassau relieve the draw</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
           <Stat value="2028" label="RMDs Begin (Age 73)" accent />
-          <Stat value="~$24K/yr" label="RMD Relief in 2028" />
-          <Stat value="~$264K" label="Cumulative RMDs 2028-36" />
+          <Stat value="~$27K/yr" label="RMD Relief in 2028" />
+          <Stat value="~$291K" label="Cumulative RMDs 2028-36" />
           <Stat value="~$26K/yr" label="Nassau 195 to Pyn" />
         </div>
         <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
           Every RMD dollar is a dollar Pyn no longer has to pay David &mdash; his own retirement accounts cover it instead.
-          That is <span className="font-bold">~$264K of pressure taken off the reserve between 2028 and 2036</span>, on top
+          That is <span className="font-bold">~$291K of pressure taken off the reserve between 2028 and 2036</span>, on top
           of Nassau 195&rsquo;s ~$26K/yr of recurring distributions. Together they are what let the reserve stabilize.
         </p>
+
+        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">Proposal: an RMD-triggered minimum distribution</h3>
+        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-4">
+          In 2028 David&rsquo;s required minimum distributions begin, and they cover part of his needs directly &mdash; so his
+          draw on Pyn falls from <span className="font-bold">{fmt(287000)} to {fmt(260166)}</span>, freeing
+          <span className="font-bold"> {fmt(26834)}</span> that Pyn no longer has to pay out. That freed amount is the natural
+          trigger: <span className="font-bold">distribute at least the RMD-freed amount pro-rata, every year, starting 2028.</span>
+        </p>
+        <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4 mb-3">
+          <Table
+            headers={['Year', 'Freed by RMD', 'David 50%', 'Will 20%', 'Ben 20%', 'Uncle 10%']}
+            rows={[
+              ['2028', fmt(26834), fmt(13417), <span key="a" className="font-semibold text-[#2E7D32]">{fmt(5367)}</span>, fmt(5367), fmt(2683)],
+              ['2030', fmt(29465), fmt(14732), <span key="b" className="font-semibold text-[#2E7D32]">{fmt(5893)}</span>, fmt(5893), fmt(2946)],
+              ['2032', fmt(32065), fmt(16032), <span key="c" className="font-semibold text-[#2E7D32]">{fmt(6413)}</span>, fmt(6413), fmt(3206)],
+              ['2036', fmt(38027), fmt(19014), <span key="d" className="font-semibold text-[#2E7D32]">{fmt(7605)}</span>, fmt(7605), fmt(3803)],
+              [
+                <span key="t" className="font-bold text-[#334A46]">Cumulative 2028&ndash;36</span>,
+                <span key="r" className="font-bold text-[#334A46]">{fmt(290507)}</span>,
+                <span key="dd" className="font-bold text-[#334A46]">{fmt(145254)}</span>,
+                <span key="w" className="font-bold text-[#2E7D32]">{fmt(58101)}</span>,
+                <span key="b2" className="font-bold text-[#2E7D32]">{fmt(58101)}</span>,
+                <span key="u" className="font-bold text-[#334A46]">{fmt(29051)}</span>,
+              ],
+            ]}
+          />
+        </div>
+        <div className="bg-[#E2EFDA] rounded-2xl border border-[#2E7D32]/20 p-5 mb-8">
+          <p className="text-[14px] text-[#334A46] leading-relaxed">
+            <span className="font-bold">Why this one is hard to argue with:</span> it is self-funding &mdash; the money is freed
+            by David&rsquo;s own retirement accounts, so it costs Pyn nothing incremental. It is automatic, tied to an
+            IRS-mandated event rather than anyone&rsquo;s discretion. And it finally establishes the mechanism and the habit of
+            distributing pro-rata. The amounts are modest (~$5&ndash;8K each per year), but they set the precedent that the
+            capital events then build on.
+          </p>
+        </div>
 
         <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">The three levers</h3>
         <div className="grid md:grid-cols-3 gap-4">
