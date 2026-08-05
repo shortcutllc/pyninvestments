@@ -3469,10 +3469,14 @@ function AgendaView() {
           transfer through Andrew</span> &mdash; so David&rsquo;s income lands like a paycheck, every month, with no gaps.
         </p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Stat value="~$27.5K/mo" label="Steady Monthly Transfer" accent />
-          <Stat value="~$330K/yr" label="Total Annual Income" />
-          <Stat value="~$25K/mo" label="Covers Living Expenses" />
-          <Stat value="Quarterly &rarr; Monthly" label="Smoother Cadence" />
+          <Stat value="~$27.5K/mo" label="Total Monthly to David" accent />
+          <Stat value="$14K/mo" label="From Lower Pyne ($168K/yr)" />
+          <Stat value="$10K/mo" label="From Pyn Reserve ($120K/yr)" />
+          <Stat value="$3.6K/mo" label="Social Security ($43K/yr)" />
+        </div>
+        <div className="mt-4 text-[13px] text-[#3D4F5F]">
+          Same <span className="font-bold">$330K/year</span> David receives today &mdash; just paid on a steady monthly
+          cadence instead of quarterly Lower Pyne checks plus ad hoc draws.
         </div>
       </Section>
 
@@ -3481,59 +3485,73 @@ function AgendaView() {
         <SectionLabel>2 &middot; The Funding Picture</SectionLabel>
         <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-2">Where It Sits, What Dad Needs &amp; 2028</h2>
         <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
-          The plan is well-funded. Here&rsquo;s the full picture &mdash; what Pyn holds today, what David needs each year,
-          where that money comes from, and how it becomes self-sustaining by 2028.
+          The plan is well-funded. Here&rsquo;s the whole picture &mdash; what Pyn holds today, the $330K David receives each
+          year, exactly where each dollar comes from, and how the mix shifts so the reserve stops doing the heavy lifting.
         </p>
 
         <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">Where Pyn sits today</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-          <Stat value="~$1.2M" label="Pyn Cash Accounts" />
-          <Stat value="~$1.5M+" label="Lower Pyne Cash (LP)" />
-          <Stat value="60%" label="Pyn&rsquo;s Lower Pyne Stake" />
-          <Stat value="Strong" label="Overall Liquidity" />
+          <Stat value="~$1.2M" label="Pyn Cash &amp; Investments" accent />
+          <Stat value="$1.5M+" label="Lower Pyne Cash (LP Level)" />
+          <Stat value="60%" label="Pyn&rsquo;s Share of Lower Pyne" />
+          <Stat value="~$30K/yr" label="Return on Pyn Balance" />
         </div>
         <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
-          Between Pyn&rsquo;s own accounts (~$1.2M) and its 60% share of Lower Pyne &mdash; which itself holds well over $1.5M
-          in cash &mdash; there is ample liquidity to fund David comfortably and, in time, the next generation.
+          Pyn holds roughly <span className="font-bold">$1.2M</span> in cash and investments, and owns 60% of Lower Pyne,
+          which itself carries well over <span className="font-bold">$1.5M</span> in cash. That balance also earns
+          ~$30K/year, which quietly offsets much of what David draws.
         </p>
 
-        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">What David needs &amp; where it comes from</h3>
+        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">What David receives &mdash; and where it comes from</h3>
         <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4 mb-3">
           <Table
-            headers={['Source', 'Annual', 'Timing']}
+            headers={['Source', 'Monthly', 'Annual', 'How it arrives']}
             rows={[
-              ['Lower Pyne distributions', '~$168K', 'Quarterly'],
-              ['Social Security', '~$43K', 'Monthly'],
-              [<span className="font-semibold text-[#334A46]">Draw from Pyn cushion</span>, <span className="font-semibold">~$90K</span>, 'Bridge'],
-              [<span className="font-bold text-[#334A46]">Total to David</span>, <span className="font-bold text-[#334A46]">~$300K+</span>, ''],
+              ['Lower Pyne distributions', '$14,000', fmt(168000), 'Quarterly today \u2192 monthly'],
+              ['Draw from Pyn reserve', '$10,000', fmt(119000), 'From Pyn cash'],
+              ['Social Security', '$3,600', fmt(43000), 'Monthly'],
+              [
+                <span key="t" className="font-bold text-[#334A46]">Total to David</span>,
+                <span key="m" className="font-bold text-[#334A46]">~$27,500</span>,
+                <span key="a" className="font-bold text-[#334A46]">{fmt(330000)}</span>,
+                '',
+              ],
             ]}
           />
         </div>
         <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
-          David&rsquo;s steady income (Lower Pyne + Social Security &asymp; $211K) covers most of his ~$300K in needs; the
-          balance is bridged by a modest draw from Pyn&rsquo;s cash reserve &mdash; exactly what that reserve is for. It&rsquo;s
-          a short bridge to 2028, not a structural shortfall.
+          Of the $330K, about <span className="font-bold">$211K is recurring income</span> (Lower Pyne + Social Security).
+          The remaining <span className="font-bold">~$119K &mdash; the $10K/month &mdash; comes out of Pyn&rsquo;s reserve.</span>{' '}
+          After the ~$30K the balance earns, the true annual cost to the reserve is closer to <span className="font-bold">$90K</span>.
         </p>
 
         <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">What happens in 2028</h3>
+        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-4">
+          David&rsquo;s $330K stays constant &mdash; what changes is the <span className="font-bold">mix</span>. Two new streams
+          arrive in 2028 (RMDs as David turns 73, and Nassau 195 distributions), and Lower Pyne grows ~3%/yr. Each one
+          replaces a dollar that used to come from the reserve:
+        </p>
         <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4 mb-3">
           <Table
-            headers={['Year', 'David’s Income', 'Expenses', 'Gap']}
+            headers={['Year', 'Soc. Sec.', 'RMDs', 'Lower Pyne', 'Nassau 195', 'From Reserve', 'Total']}
             rows={[
-              ['2026', '~$241K', '~$300K', <span className="text-[#B26A00] font-semibold">($59K)</span>],
-              ['2027', '~$248K', '~$308K', <span className="text-[#B26A00] font-semibold">($60K)</span>],
-              [<span className="font-bold text-[#334A46]">2028 &mdash; pivot</span>, '~$305K', '~$315K', <span className="text-[#B26A00] font-semibold">($10K)</span>],
-              ['2030', '~$322K', '~$331K', <span className="text-[#2E7D32] font-semibold">near even</span>],
-              ['2032', '~$340K', '~$348K', <span className="text-[#2E7D32] font-semibold">surplus</span>],
+              ['2026', fmt(43000), '\u2014', fmt(168000), '\u2014', <span key="a" className="font-semibold text-[#B26A00]">{fmt(119000)}</span>, fmt(330000)],
+              ['2027', fmt(43000), '\u2014', fmt(173040), '\u2014', <span key="b" className="font-semibold text-[#B26A00]">{fmt(113960)}</span>, fmt(330000)],
+              [<span key="y" className="font-bold text-[#334A46]">2028</span>, fmt(43000), fmt(26834), fmt(178231), fmt(26400), <span key="c" className="font-semibold text-[#2E7D32]">{fmt(55535)}</span>, fmt(330000)],
+              ['2030', fmt(43000), fmt(29465), fmt(189085), fmt(26400), <span key="d" className="font-semibold text-[#2E7D32]">{fmt(42050)}</span>, fmt(330000)],
+              ['2032', fmt(43000), fmt(32065), fmt(200601), fmt(26400), <span key="e" className="font-semibold text-[#2E7D32]">{fmt(27934)}</span>, fmt(330000)],
             ]}
           />
         </div>
-        <p className="text-[14px] text-[#3D4F5F] leading-relaxed">
-          By 2028, RMDs (David turns 73) and Nassau 195 distributions come online, closing the gap to ~$10K. From there David
-          is essentially self-funding, the cushion stops drawing down, and Pyn&rsquo;s surplus can begin flowing to Ben &amp;
-          Will (~$35&ndash;45K each, growing over time). <span className="font-medium">The one dependency to watch: Nassau 195
-          lease-up &mdash; if it slips, the pivot slips.</span>
-        </p>
+        <div className="bg-[#E2EFDA] rounded-2xl border border-[#2E7D32]/20 p-5">
+          <p className="text-[14px] text-[#334A46] leading-relaxed">
+            The reserve draw falls from <span className="font-bold">~$119K to ~$56K in 2028</span>, and to
+            <span className="font-bold"> ~$28K by 2032</span> &mdash; by which point Pyn&rsquo;s own investment returns
+            (~$25&ndash;30K/yr) essentially cover it and the balance stops eroding. The 2029 refinancing adds materially on
+            top. <span className="font-medium">The one dependency to watch is the Nassau 195 lease-up; if it slips, the
+            2028 step-down slips with it.</span>
+          </p>
+        </div>
       </Section>
 
       {/* 3 · Cleanup */}
