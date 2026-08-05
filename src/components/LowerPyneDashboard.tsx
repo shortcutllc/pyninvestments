@@ -3554,9 +3554,77 @@ function AgendaView() {
         </div>
       </Section>
 
+      {/* 3 · The Unlock for Ben & Will */}
+      <Section id="agenda-unlock" className="mb-14">
+        <SectionLabel>3 &middot; The Unlock for Ben &amp; Will</SectionLabel>
+        <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-2">Where the Room Actually Comes From</h2>
+        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-6">
+          David&rsquo;s $330K absorbs essentially all of Pyn&rsquo;s recurring income for the next decade &mdash; on operating
+          cash flow alone, there is no meaningful surplus until the <span className="font-bold">mid-2030s</span>. The room for
+          Ben &amp; Will comes from somewhere else: a stack of <span className="font-bold">capital events</span>, plus RMDs
+          taking pressure off the draw.
+        </p>
+
+        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">The capital-event stack</h3>
+        <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4 mb-3">
+          <Table
+            headers={['Event', 'Timing', 'To Lower Pyne', 'To Pyn (60%)', 'Will / Ben Each']}
+            rows={[
+              ['Bordentown sale', <span key="a" className="text-[#2E7D32] font-semibold">Closed</span>, fmt(487600), fmt(292560), fmt(58512)],
+              ['16 Chambers sale', 'In progress', '$561K \u2013 $834K', '$337K \u2013 $500K', '$67K \u2013 $100K'],
+              ['Excess Lower Pyne cash', <span key="b" className="text-[#2E7D32] font-semibold">Available now</span>, '$1.5M+', '$900K+', '$180K+'],
+              ['2029 refinance cash-out', '2029', fmt(1400000), fmt(840000), fmt(168000)],
+              ['195 Nassau sale', 'Future', '$1.2M \u2013 $2.2M', '$720K \u2013 $1.32M', '$144K \u2013 $264K'],
+              [
+                <span key="t" className="font-bold text-[#334A46]">Total stack</span>,
+                '',
+                <span key="l" className="font-bold text-[#334A46]">$5.1M \u2013 $6.4M</span>,
+                <span key="p" className="font-bold text-[#334A46]">$3.1M \u2013 $3.9M</span>,
+                <span key="w" className="font-bold text-[#2E7D32]">$618K \u2013 $771K</span>,
+              ],
+            ]}
+          />
+        </div>
+        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
+          Across the full stack, Ben and Will are each looking at roughly <span className="font-bold">$620K&ndash;$770K</span>{' '}
+          &mdash; an order of magnitude more than the ~$35&ndash;45K/yr that operating surplus might eventually produce.
+          <span className="font-medium"> This is where the real money is, and it is a capital-allocation decision, not a
+          waiting game.</span>
+        </p>
+
+        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">RMDs &amp; Nassau relieve the draw</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+          <Stat value="2028" label="RMDs Begin (Age 73)" accent />
+          <Stat value="~$24K/yr" label="RMD Relief in 2028" />
+          <Stat value="~$264K" label="Cumulative RMDs 2028-36" />
+          <Stat value="~$26K/yr" label="Nassau 195 to Pyn" />
+        </div>
+        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
+          Every RMD dollar is a dollar Pyn no longer has to pay David &mdash; his own retirement accounts cover it instead.
+          That is <span className="font-bold">~$264K of pressure taken off the reserve between 2028 and 2036</span>, on top
+          of Nassau 195&rsquo;s ~$26K/yr of recurring distributions. Together they are what let the reserve stabilize.
+        </p>
+
+        <h3 className="text-[1.1rem] font-bold text-[#334A46] mb-3">The three levers</h3>
+        <div className="grid md:grid-cols-3 gap-4">
+          <div className="bg-[#E2EFDA] rounded-2xl border border-[#2E7D32]/20 p-5">
+            <div className="text-[13px] font-extrabold text-[#2E7D32] mb-2">1 &middot; Distribute the excess cash now</div>
+            <div className="text-[13px] text-[#334A46] leading-relaxed">Over $1.5M is already sitting at the LP level. It does not depend on any pivot &mdash; this is the fastest path.</div>
+          </div>
+          <div className="bg-[#E2EFDA] rounded-2xl border border-[#2E7D32]/20 p-5">
+            <div className="text-[13px] font-extrabold text-[#2E7D32] mb-2">2 &middot; Earmark the 2029 refi</div>
+            <div className="text-[13px] text-[#334A46] leading-relaxed">Decide Ben &amp; Will&rsquo;s share <span className="italic">before</span> the proceeds get absorbed into reinvestment or the partner buyout.</div>
+          </div>
+          <div className="bg-[#FFF8E1] rounded-2xl border border-[#F57F17]/20 p-5">
+            <div className="text-[13px] font-extrabold text-[#B26A00] mb-2">3 &middot; Hold David&rsquo;s draw flat</div>
+            <div className="text-[13px] text-[#334A46] leading-relaxed">The plan works because the $330K stays fixed while income grows. Every increase is a dollar that never reaches the next generation.</div>
+          </div>
+        </div>
+      </Section>
+
       {/* 3 · Cleanup */}
       <Section id="agenda-cleanup" className="mb-14">
-        <SectionLabel>3 &middot; Cleanup &amp; Documentation</SectionLabel>
+        <SectionLabel>4 &middot; Cleanup &amp; Documentation</SectionLabel>
         <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-5">Getting the Structure Clean</h2>
         {listCard([
           ['Operating agreement', 'Reconcile the pro-rata terms with the actual 1% practice, then sign the execution copy. Attorney: Troutman Pepper (who drafted it).'],
@@ -3569,7 +3637,7 @@ function AgendaView() {
 
       {/* 4 · Estate */}
       <Section id="agenda-estate" className="mb-14">
-        <SectionLabel>4 &middot; Estate &amp; Next-Generation Goals</SectionLabel>
+        <SectionLabel>5 &middot; Estate &amp; Next-Generation Goals</SectionLabel>
         <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-5">Protecting the Plan</h2>
         {listCard([
           ['Confirm the estate-freeze intent', 'Kids hold the 20% equity and appreciation; David keeps the income while alive. Confirm this is the intent and document it properly.'],
@@ -3582,7 +3650,7 @@ function AgendaView() {
 
       {/* 5 · Action Items */}
       <Section id="agenda-actions" className="mb-8">
-        <SectionLabel>5 &middot; Action Items</SectionLabel>
+        <SectionLabel>6 &middot; Action Items</SectionLabel>
         <h2 className="text-[1.5rem] md:text-[1.75rem] font-extrabold text-[#334A46] mb-5">Next Steps</h2>
         <div className="bg-white rounded-2xl border border-[#334A46]/[.08] p-4">
           <Table
