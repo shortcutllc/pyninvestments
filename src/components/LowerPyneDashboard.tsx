@@ -2618,7 +2618,7 @@ const DAVID_NW = {
 };
 
 // ── David Income & Expenses ──
-const DAVID_SS = 43000;
+const DAVID_SS = 62832; // Max benefit, deferred to age 70 (2026 est., ~$5,236/mo)
 const DAVID_RETIREMENT_TOTAL = 645000;
 const DAVID_EXPENSES_BASE = 300000;
 
@@ -3492,8 +3492,8 @@ function AgendaView() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Stat value="~$27.5K/mo" label="Total Monthly to David" accent />
           <Stat value="$14K/mo" label="Lower Pyne ($168K/yr)" />
-          <Stat value="$10K/mo" label="Pyn Reserve ($119K/yr)" />
-          <Stat value="$3.6K/mo" label="Social Security ($43K/yr)" />
+          <Stat value="$8.3K/mo" label="Pyn Reserve ($99K/yr)" />
+          <Stat value="$5.2K/mo" label="Social Security ($63K/yr)" />
         </div>
       </Section>
 
@@ -3522,8 +3522,8 @@ function AgendaView() {
             headers={['Source', 'Monthly', 'Annual', 'How it arrives']}
             rows={[
               ['Lower Pyne distributions', '$14,000', fmt(168000), 'Quarterly today → monthly'],
-              ['Draw from Pyn reserve', '$10,000', fmt(119000), 'From Pyn cash'],
-              ['Social Security', '$3,600', fmt(43000), 'Monthly'],
+              ['Draw from Pyn reserve', '$8,264', fmt(99168), 'From Pyn cash'],
+              ['Social Security (max, deferred to 70)', '$5,236', fmt(62832), 'Monthly'],
               [
                 <span key="t" className="font-bold text-[#334A46]">Total to David</span>,
                 <span key="m" className="font-bold text-[#334A46]">~$27,500</span>,
@@ -3534,8 +3534,11 @@ function AgendaView() {
           />
         </Card>
         <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
-          About <span className="font-bold">$211K is recurring income</span> (Lower Pyne + Social Security). The remaining
-          <span className="font-bold"> ~$119K &mdash; the $10K/month &mdash; comes out of Pyn&rsquo;s reserve.</span>
+          About <span className="font-bold">$231K is recurring income</span> (Lower Pyne + Social Security). The remaining
+          <span className="font-bold"> ~$99K &mdash; about $8,300/month &mdash; comes out of Pyn&rsquo;s reserve.</span>{' '}
+          David deferred Social Security to 70 and receives the maximum benefit &mdash; roughly <span className="font-bold">$5,236/month
+          gross</span>, or about <span className="font-bold">$4,560&ndash;4,690 landing in the bank</span> after Medicare
+          premiums are withheld.
         </p>
 
         <Sub>What happens in 2028</Sub>
@@ -3548,17 +3551,17 @@ function AgendaView() {
           <Table
             headers={['Year', 'Soc. Sec.', 'RMDs', 'Lower Pyne', 'Nassau 195', 'From Reserve', 'Total']}
             rows={[
-              ['2026', fmt(43000), '—', fmt(168000), '—', <span key="a" className="font-semibold text-[#B26A00]">{fmt(119000)}</span>, fmt(330000)],
-              ['2027', fmt(43000), '—', fmt(173040), '—', <span key="b" className="font-semibold text-[#B26A00]">{fmt(113960)}</span>, fmt(330000)],
-              [<span key="y" className="font-bold text-[#334A46]">2028</span>, fmt(43000), fmt(26834), fmt(178231), fmt(26400), <span key="c" className="font-semibold text-[#2E7D32]">{fmt(55535)}</span>, fmt(330000)],
-              ['2030', fmt(43000), fmt(29465), fmt(189085), fmt(26400), <span key="d" className="font-semibold text-[#2E7D32]">{fmt(42050)}</span>, fmt(330000)],
-              ['2032', fmt(43000), fmt(32065), fmt(200601), fmt(26400), <span key="e" className="font-semibold text-[#2E7D32]">{fmt(27934)}</span>, fmt(330000)],
+              ['2026', fmt(62832), '—', fmt(168000), '—', <span key="a" className="font-semibold text-[#B26A00]">{fmt(99168)}</span>, fmt(330000)],
+              ['2027', fmt(62832), '—', fmt(173040), '—', <span key="b" className="font-semibold text-[#B26A00]">{fmt(94128)}</span>, fmt(330000)],
+              [<span key="y" className="font-bold text-[#334A46]">2028</span>, fmt(62832), fmt(26834), fmt(178231), fmt(26400), <span key="c" className="font-semibold text-[#2E7D32]">{fmt(35703)}</span>, fmt(330000)],
+              ['2030', fmt(62832), fmt(29465), fmt(189085), fmt(26400), <span key="d" className="font-semibold text-[#2E7D32]">{fmt(22218)}</span>, fmt(330000)],
+              ['2032', fmt(62832), fmt(32065), fmt(200601), fmt(26400), <span key="e" className="font-semibold text-[#2E7D32]">{fmt(8102)}</span>, fmt(330000)],
             ]}
           />
         </Card>
         <Note>
-          The reserve draw falls from <span className="font-bold">~$119K to ~$56K in 2028</span>, and to
-          <span className="font-bold"> ~$28K by 2032</span>. The one dependency to watch is the Nassau 195 lease-up &mdash;
+          The reserve draw falls from <span className="font-bold">~$99K to ~$36K in 2028</span>, and to
+          <span className="font-bold"> ~$8K by 2032</span> &mdash; effectively self-funding. The one dependency to watch is the Nassau 195 lease-up &mdash;
           if it slips, the 2028 step-down slips with it.
         </Note>
       </Section>
@@ -3567,6 +3570,28 @@ function AgendaView() {
       <Section id="agenda-unlock" className="mb-16">
         <Head n="3" label="For Ben & Will" title="Where the Room Actually Comes From"
           sub="David's $330K absorbs nearly all of Pyn's recurring income for the next decade — on operating cash flow alone there is no meaningful surplus until the mid-2030s. The room comes from capital events instead, plus RMDs taking pressure off the draw." />
+
+        <Sub>Near-term cash into Lower Pyne</Sub>
+        <Card>
+          <Table
+            headers={['Item', 'Timing', 'To Lower Pyne', 'To Pyn (60%)', 'Will / Ben Each']}
+            rows={[
+              ['16 Chambers loan repayment', <span key="a" className="text-[#2E7D32] font-semibold">Next month</span>, fmt(70000), fmt(42000), fmt(8400)],
+              ['3450 Princeton Pike', 'Near term', fmt(12500), fmt(7500), fmt(1500)],
+              [
+                <span key="t" className="font-bold text-[#334A46]">Subtotal</span>, '',
+                <span key="l" className="font-bold text-[#334A46]">{fmt(82500)}</span>,
+                <span key="p" className="font-bold text-[#334A46]">{fmt(49500)}</span>,
+                <span key="w" className="font-bold text-[#2E7D32]">{fmt(9900)}</span>,
+              ],
+            ]}
+          />
+        </Card>
+        <p className="text-[14px] text-[#3D4F5F] leading-relaxed mb-8">
+          The <span className="font-bold">$70,000 loan Lower Pyne made to 16 Chambers is being repaid next month</span> and
+          lands in the LP cash account, alongside <span className="font-bold">$12,500 from 3450 Princeton Pike</span>. Both
+          add to a reserve that is already sitting in cash &mdash; another reason to decide what that balance is actually for.
+        </p>
 
         <Sub>The capital-event stack</Sub>
         <Card>
@@ -3683,6 +3708,27 @@ function AgendaView() {
             ]}
           />
         </Card>
+      </Section>
+
+      {/* 7 — Notes */}
+      <Section id="agenda-notes" className="mb-8">
+        <Head n="7" label="Meeting Notes" title="Notes & Decisions" />
+        <div className="bg-[#FAFAFA] rounded-2xl border border-[#334A46]/[.08] p-6">
+          <div className="text-[13px] font-bold text-[#334A46] mb-4">Open questions to confirm</div>
+          <ul className="space-y-2 text-[13px] text-[#3D4F5F] leading-relaxed list-disc pl-5 mb-6">
+            <li>Confirm David&rsquo;s actual Social Security deposit from his SSA-1099 or bank statement.</li>
+            <li>Confirm the 3450 Princeton Pike $12,500 &mdash; one-time distribution or recurring?</li>
+            <li>Confirm the Bordentown closing statement (actual mortgage payoff and closing costs).</li>
+            <li>Confirm how much of the Lower Pyne reserve is genuinely uncommitted (vs. capex or the partner buyout).</li>
+            <li>Confirm the 195 Nassau lease-up timeline &mdash; the 2028 step-down depends on it.</li>
+          </ul>
+          <div className="text-[13px] font-bold text-[#334A46] mb-3">Notes</div>
+          <div className="space-y-6">
+            {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
+              <div key={i} className="border-b border-[#334A46]/[.12]" />
+            ))}
+          </div>
+        </div>
       </Section>
     </div>
   );
@@ -4131,7 +4177,7 @@ const PERSONAL_EXPENSE_ITEMS = [
     { name: 'Bank Fee', amount: 232 },
   ]},
   { category: 'Lifestyle', items: [
-    { name: 'Donations', amount: 23985 },
+    { name: 'Audrey — automatic payment', amount: 23985 },
     { name: 'Gifts', amount: 18988 },
     { name: 'Travel', amount: 447 },
     { name: 'Dry Cleaning', amount: 702 },
@@ -4156,8 +4202,8 @@ function PersonalExpensesView() {
 
   // Income side
   const lpDistributions = 168000; // David's share of Lower Pyne distributions
-  const pynExtraDraw = 120000;   // $10K/month extra draw from Pyn
-  const socialSecurity = 43000;  // Social Security
+  const pynExtraDraw = 99168;    // ~$8.3K/month extra draw from Pyn
+  const socialSecurity = 62832;  // Max benefit, deferred to age 70
   const totalIncome = lpDistributions + pynExtraDraw + socialSecurity;
   const netIncome = totalIncome - totalExpenses;
 
@@ -4266,11 +4312,11 @@ function PersonalExpensesView() {
               <div className="text-[14px] font-bold tabular-nums text-[#334A46]">{fmtD(lpDistributions)}</div>
             </div>
             <div className="px-5 py-3 flex items-center justify-between">
-              <div className="text-[13px] text-[#334A46]">Pyn Extra Draw ($10K/mo)</div>
+              <div className="text-[13px] text-[#334A46]">Pyn Extra Draw (~$8.3K/mo)</div>
               <div className="text-[14px] font-bold tabular-nums text-[#334A46]">{fmtD(pynExtraDraw)}</div>
             </div>
             <div className="px-5 py-3 flex items-center justify-between">
-              <div className="text-[13px] text-[#334A46]">Social Security</div>
+              <div className="text-[13px] text-[#334A46]">Social Security (max, deferred to 70)</div>
               <div className="text-[14px] font-bold tabular-nums text-[#334A46]">{fmtD(socialSecurity)}</div>
             </div>
             <div className="px-5 py-4 flex items-center justify-between bg-[#E8F5E9]">
